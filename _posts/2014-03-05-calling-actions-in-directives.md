@@ -5,7 +5,6 @@ description: "Techniques for executing actions on directives"
 category: Software
 tags: [Angular, Directives]
 ---
-{% include JB/setup %}
 
 This thread is meant to be a discussion.  A coleague asked me yesterday what the best way is to call an action on a directive.  We know that directives can call back to the parent scope, but with isolated scopes, you have no way to call into a directive.
 
