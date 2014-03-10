@@ -69,6 +69,19 @@ footer p {
   color: #f2f2f2;
 }
 
+footer ul {
+  text-align: center;
+}
+
+footer ul li {
+  display: inline;
+  margin: 0em 0.5em;
+}
+
+footer ul li a {
+  text-decoration: none;
+}
+
 a {
   text-decoration: none;
   color: #007edf;
@@ -238,6 +251,10 @@ Full-Width Styles
 
 #header_wrap .inner {
   padding: 50px 10px 30px 10px;
+}
+
+#header_wrap .inner a {
+  color: white;
 }
 
 #project_title {
