@@ -24,7 +24,7 @@ Innovations will come in one of three forms:
 ### The Kit
 ![Nodebot Army](/images/nodebot-kit.JPG)
 
-I was able to put together a kit that came in around $45 per bag.  This is the kit we that everyone will get:
+Inspired by the [SumoBot Jr.](http://sumobotkit.com/) and the [SimpleBot](https://github.com/nodebotsau/SimpleBot), I was able to put together a kit that came in around $45 per bag.  This is the kit we that everyone will get:
 
 - (1) [SainSmart Uno Arduino Clone](http://www.sainsmart.com/sainsmart-uno-r3-atmega328-au-development-board-compatible-with-arduino-uno-r3.html)
 - 5mm Wood Platform -- (1) 3" x 6.75" panel and (2) 2.5" wheels
