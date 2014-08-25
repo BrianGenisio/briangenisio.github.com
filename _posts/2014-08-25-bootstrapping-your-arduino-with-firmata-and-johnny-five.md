@@ -10,7 +10,7 @@ Here is a little screencast I put together to get all the software you need to g
 
 - [Arduino IDE](http://arduino.cc/en/Main/Software)
 - [Node.js](http://nodejs.org)
-
+- [Johnny-Five](https://github.com/rwaldron/johnny-five)   
 
 <iframe width="640" height="360" src="//www.youtube.com/embed/j-Xvb386Dr0" frameborder="0" allowfullscreen></iframe>
 
