@@ -6,7 +6,7 @@ category: Software
 tags: [NodeBots, Arduino, Johnny-Five]
 ---
 
-Here is a little screencast I put together to get all the software you need to get started with your NodeBot.  The instructions are exactly the same for Windows.
+Here is a little screencast I put together to get all the software you need to get started with your NodeBot.  The instructions are exactly the same for Windows. Unless, of course, you want to [use Visual Studio](/software/2014/08/25/using-visual-studio-to-program-your-nodebot.html).  
 
 - [Arduino IDE](http://arduino.cc/en/Main/Software)
 - [Node.js](http://nodejs.org)

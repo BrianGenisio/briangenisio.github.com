@@ -61,7 +61,7 @@ Your servos may start spinning now.  If that happens, you can trim them using th
 
 ### Start programming your bot!
 
-Now you have a working bot.  You can plug your USB cable into the board and go to town.  If you haven't already [gotten yourself bootstrapped](/software/2014/08/25/bootstrapping-your-arduino-with-firmata-and-johnny-five.html), now is a good time.
+Now you have a working bot.  You can plug your USB cable into the board and go to town.  If you haven't already [gotten yourself bootstrapped](/software/2014/08/25/bootstrapping-your-arduino-with-firmata-and-johnny-five.html) ([or with Visual Studio](/software/2014/08/25/using-visual-studio-to-program-your-nodebot.html)), now is a good time.
 
 Take a look at the [servo API](https://github.com/rwaldron/johnny-five/wiki/Servo) in Johnny-Five to get you started.  Here is a [simple example](https://github.com/rwaldron/johnny-five/blob/master/docs/servo-continuous.md) that will rotate your 10-pin servo clockwise.
 
