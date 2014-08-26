@@ -26,38 +26,38 @@ You are encouraged to build your bot however you want, but this is how you can b
 
 ### Lay out your parts
 You want to get a feel for where everything will go.  Lay your major components out on the board and rough-in where you think you'd like them to go.
-![Rough-out the parts](/images/nodebot-assemble/nodebot-rough-out.jpg)
+![Rough-out the parts](/images/nodebot-assemble/nodebot-rough-out.JPG)
 
 ### Attach your wheels to your servos
 The easiest way to do this is to remove the servo horn and attach the horn to the wheels using the self-drilling screws.  The holes in the servo horn are smaller than the screws but these things make quick work of the plastic and go right through to the wood.  Just make sure they are centered. Reattach the horns when you are done.
-![Attach the wheels to the servo horns](/images/nodebot-assemble/nodebot-attach-wheels-to-servo.jpg)
+![Attach the wheels to the servo horns](/images/nodebot-assemble/nodebot-attach-wheels-to-servo.JPG)
 
 ### Attach the servos to your chassis
 You can do this however you want.  A quick-and-dirty approach is to use double-sided tape.  I prefer zip-ties.  Figure out where you want the servos to sit and mark it on the board.  Use a drill to punch a hole through the wood.  Attach the servos to the wood using zip-ties and snip off the excess zip-tie.
 
-![Mark your servo location](/images/nodebot-assemble/nodebot-mark-servo-location.jpg)
-![Attach the servos with zip-ties](/images/nodebot-assemble/nodebot-attach-servos.jpg)
+![Mark your servo location](/images/nodebot-assemble/nodebot-mark-servo-location.JPG)
+![Attach the servos with zip-ties](/images/nodebot-assemble/nodebot-attach-servos.JPG)
 
 ### Attach the caster wheel to the bottom of the chassis
 The self-drilling screws are really useful for this.
-![Attach the front caster wheel](/images/nodebot-assemble/nodebot-attach-caster2.jpg)
+![Attach the front caster wheel](/images/nodebot-assemble/nodebot-attach-caster2.JPG)
 
 ### Attach the Arduino and Breadboard
 Affix the Arduino using double-stick tape.  Affix the breadboard using the attached mounting tape.
-![Affix the boards](/images/nodebot-assemble/nodebot-attach-boards.jpg)
+![Affix the boards](/images/nodebot-assemble/nodebot-attach-boards.JPG)
 
 ### Mount the battery
 Using double-stick tape, affix the battery to the bot.  Connect it to the Arduino using the 9v clip.
-![Affix the battery](/images/nodebot-assemble/nodebot-attach-battery.jpg)
+![Affix the battery](/images/nodebot-assemble/nodebot-attach-battery.JPG)
 
 ### Power the servos from the board
 You are not likely to keep the servos here permanently, but this is a good starting point.  Pins 9 and 10 support PWM signals, which are best for servos.  You can connect them to the SVG pin headers for now.  The white leads are the "signal" for the SVG pins.
 
-![Power the servos](/images/nodebot-assemble/nodebot-plug-servos.jpg)
+![Power the servos](/images/nodebot-assemble/nodebot-plug-servos.JPG)
 
 Your servos may start spinning now.  If that happens, you can trim them using the screws on the back of the servos.  You may need to do this again once you have hooked your system up to the software.
 
-![Trim the servos](/images/nodebot-assemble/nodebot-calibrate.jpg)
+![Trim the servos](/images/nodebot-assemble/nodebot-calibrate.JPG)
 
 ### Start programming your bot!
 
@@ -65,7 +65,7 @@ Now you have a working bot.  You can plug your USB cable into the board and go t
 
 Take a look at the [servo API](https://github.com/rwaldron/johnny-five/wiki/Servo) in Johnny-Five to get you started.  Here is a [simple example](https://github.com/rwaldron/johnny-five/blob/master/docs/servo-continuous.md) that will rotate your 10-pin servo clockwise.
 
-![Start Programming](/images/nodebot-assemble/nodebot-program-bot.jpg)
+![Start Programming](/images/nodebot-assemble/nodebot-program-bot.JPG)
 
 
 
