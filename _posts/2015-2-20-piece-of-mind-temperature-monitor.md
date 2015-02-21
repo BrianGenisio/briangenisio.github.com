@@ -13,11 +13,11 @@ This wouldn't normally cause me any anxiety if it were not for my 22 year old fu
 ## Spark Core + Thermistor
 I dove into my basement to scrounge for parts and I built myself an "Internet of Things" thing to monitor the temperature inside my home.  It was really easy and it only took me 30 minutes.  I had an unused [Spark Core](https://www.spark.io/) and a [Tinkerkit Thermistor](http://www.amazon.com/Arduino-TinkerKit-Thermistor-Module/dp/B00EIB48W8) lying around, so I used them.  Any thermistor would have worked, but that is the one I found in my lab.
 
-![Spark + Thermistor](/images/codemash15/spark_temperature.png)
+![Spark + Thermistor](/images/spark_temperature.jpg)
 
 I hooked up ground, power, and signal (to Analog 7) and got coding.  I found some conversion code for this Tinkerkit module on the [Johnny-Five](https://github.com/rwaldron/johnny-five) project, and I ported it over to C.  The Spark.io builder made it easy for me to send the following code to my Spark Core:
 
-![Spark + Thermistor Diagram](/images/codemash15/spark_temperature_fritz.png)
+![Spark + Thermistor Diagram](/images/spark_temperature_fritz.png)
 
 ```c
 #include "math.h"
@@ -91,7 +91,7 @@ $(function() {
 
 Now I can go to the "full-page" view of the site from my phone.  The UI was only hacked together so it is crude (remember, this entire project only took 30 minutes to hack together), but it works!
 
-![See the temperature](http://prntscr.com/67tjgt)
+![See the temperature](http://i.imgur.com/wrm0jHJ.png)
 
 But I really don't want to be checking my phone every 5 minutes.
 
@@ -101,7 +101,7 @@ I really like [IFTTT](http://ifttt.com).  It stands for "If This Then That".  I 
 
 I had to put the device in my freezer, but I received an alert on my phone that the temperature dropped below 55 degrees!
 
-![A phone alert](/images/codemash15/ifttt_alert.png)
+![A phone alert](/images/ifttt_alert.png)
 
 ## Did My Furnace Fail?
 No, it did not.  BUT, I was never worried about it on vacation because I always knew that it was holding up.  In fact, on the last day of our vacation, the temperature jumped from 65 degrees to 70 degrees.  At first I was confused, but then I learned that our house cleaners had come that morning and they bumped the temperature up in anticipation of our arrival home!  
