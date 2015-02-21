@@ -6,6 +6,8 @@ category: Software
 tags: [Spark Core, Hacking, IOT, Internet of Things]
 ---
 
+![Siesta Key](/images/siesta_key.jpg)
+
 I just got home from 5-day vacation in [Siesta Key](http://www.drbeach.org/top10beaches.htm) where my family and I frolicked in the the slightly warmer climate than what we are used to in Ann Arbor Michigan.  The entire eastern half of the nation was under a [polar vortex](http://en.wikipedia.org/wiki/Polar_vortex) so our balmy Floridian host was much cooler than expected.  Back home, however, the temperature dropped as low as -28 degrees Fahrenheit (-33 degrees Celsius).
 
 This wouldn't normally cause me any anxiety if it were not for my 22 year old furnace.  I couldn't help but worry that it would fail, causing my pipes to freeze followed by all sorts of damage.  I knew I wouldn't be comfortable leaving my home without feeling confident that my furnace was keeping up.
