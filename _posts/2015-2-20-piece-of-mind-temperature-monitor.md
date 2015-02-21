@@ -3,7 +3,7 @@ layout: post
 title: "Piece of Mind Temperature Monitor"
 description: "How I eased my mind in the bitter cold"
 category: Software
-tags: [Spark Core, Hacking]
+tags: [Spark Core, Hacking, IOT, Internet of Things]
 ---
 
 I just got home from 5-day vacation in [Siesta Key](http://www.drbeach.org/top10beaches.htm) where my family and I frolicked in the the slightly warmer climate than what we are used to in Ann Arbor Michigan.  The entire eastern half of the nation was under a [polar vortex](http://en.wikipedia.org/wiki/Polar_vortex) so our balmy Floridian host was much cooler than expected.  Back home, however, the temperature dropped as low as -28 degrees Fahrenheit (-33 degrees Celsius).
