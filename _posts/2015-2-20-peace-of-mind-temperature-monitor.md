@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Piece of Mind Temperature Monitor"
+title: "Peace of Mind Temperature Monitor"
 description: "How I eased my mind in the bitter cold"
 category: Software
 tags: [Spark Core, Hacking, IOT, Internet of Things]
