@@ -63,7 +63,24 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: minos
+
+# Theme configuration
+logo_text: Brian Genisio's Blog
+menu:
+  Archives: archives
+  About: about
+
+# Content
+excerpt_link: Read More
+toc: false #  Whether to show the table of contents in articles
+fancybox: true
+
+# Miscellaneous
+google_analytics:
+favicon: /favicon.png
+
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
