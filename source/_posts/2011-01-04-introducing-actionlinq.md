@@ -1,14 +1,10 @@
 ---
 title: Introducing… ActionLinq
-tags:
-  - ActionLinq
-  - Flash
-  - Flex
-  - Linq
-id: 246
-categories:
-  - Uncategorized
 date: 2011-01-04 03:02:48
+layout: post
+category: Software
+tags: [ActionLinq, Flash, Flex, Linq]
+permalink: /archives/2011/01/04/introducing-actionlinq/
 ---
 
 [![](https://bitbucket.org/briangenisio/actionlinq/raw/395b49a6b4ec/Assets/ActionLINQ.png)](https://bitbucket.org/briangenisio/actionlinq/)
@@ -16,7 +12,8 @@ date: 2011-01-04 03:02:48
 I am excited to release a pet project of mine that I have been developing for a few months.&#160; [ActionLinq](https://bitbucket.org/briangenisio/actionlinq/) is a complete [LINQ-to-Objects](http://msdn.microsoft.com/library/bb397919.aspx) implementation for ActionScript 3.0.&#160; Including the same deferred execution behavior as LINQ, [ActionLinq](https://bitbucket.org/briangenisio/actionlinq/) is a functional query library designed to process and manipulate data in ActionScript 3.0.&#160; It is especially useful for processing data received from web services and manipulating it to fit into the view.
 
 Let me illustrate what [ActionLinq](https://bitbucket.org/briangenisio/actionlinq/) can do with an example of some basic data processing:
-  <pre class="brush: as3; ruler: true; gutter: false; toolbar: false;">var transformed:Array =
+```actionscript
+var transformed:Array =
         [-4, -3, -2, -1, 0, 1, 2, 3, 4]
         .where(isEven)
         .select(square)
@@ -24,27 +21,30 @@ Let me illustrate what [ActionLinq](https://bitbucket.org/briangenisio/actionlin
         .reverse()
         .toArray();
 
-assertThat(transformed, array(0, 4, 16));</pre>
+assertThat(transformed, array(0, 4, 16));
+```
 
 [ActionLinq](https://bitbucket.org/briangenisio/actionlinq/) can query pretty much any collection type (Array, ArrayCollection, ArrayList, XMLList, Vector, etc) and it can output it just the same.&#160; 
 
 Lets look at a slightly more real-world example.&#160; Assume that the **xml** variable is data received from something like a REST service.&#160; We want to create an ordered collection of distinct categories from the XML that was received:
 
-<pre class="brush: as3; ruler: true; gutter: false; toolbar: false;">var xml = &lt;products&gt;
-              &lt;product name=&quot;Beef&quot;         category=&quot;Meat&quot; /&gt;
-              &lt;product name=&quot;Hot Dog Buns&quot; category=&quot;Bread&quot; /&gt;
-              &lt;product name=&quot;Bran Flakes&quot;  category=&quot;Cereal&quot; /&gt;
-              &lt;product name=&quot;Chicken&quot;      category=&quot;Meat&quot; /&gt;
-              &lt;product name=&quot;White Bread&quot;  category=&quot;Bread&quot; /&gt;
-              &lt;product name=&quot;Pita Bread&quot;   category=&quot;Bread&quot; /&gt;
-          &lt;/products&gt;;
+```actionscript
+var xml = <products>
+              <product name="Beef"         category="Meat" />
+              <product name="Hot Dog Buns" category="Bread" />
+              <product name="Bran Flakes"  category="Cereal" />
+              <product name="Chicken"      category="Meat" />
+              <product name="White Bread"  category="Bread" />
+              <product name="Pita Bread"   category="Bread" />
+          </products>;
 
 var categories:ArrayCollection =
         Enumerable.from(xml.product)
         .select(function(product):String { return product.@category })
         .distinct()
         .orderBy(identity)
-        .toArrayCollection();</pre>
+        .toArrayCollection();
+```
 
 Running that query lets you bind the **categories** variable to a **DropDownList** with a very expressive, functional query on the data that was received.
 
@@ -78,10 +78,6 @@ There is no better way to fully understand the power and intricacies of LINQ in 
 
 There is no better way to get to know a new environment than to implement a familiar set of functionality in it.&#160; I was forced to learn about areas of Flex and ActionScript 3.0 that I would not have likely done on my own.&#160; I learned all about functional programming and closures in AS3, unit testing in Flex, the dynamic capabilities of AS3, monkey patching and ASDoc to name a few.&#160; I have come out of the [ActionLinq](https://bitbucket.org/briangenisio/actionlinq/) project with a strong understanding of the ActionScript 3.0 language and the more esoteric but powerful features of the language.&#160; I was also painfully made aware of the limitations of ActionScript that I miss from C#: Generics, method overloading, operator overloading, yielding and lambdas to name a few.
 
-## 
-
 ## Go Use It!
 
 Give it a try.&#160; Let me know how it goes.&#160; Have fun.&#160; Enjoy!
-
-[![Shout it](http://dotnetshoutout.com/image.axd?url=http%3A%2F%2Fhouseofbilz.com%2Farchives%2F2011%2F01%2F04%2Fintroducing-actionlinq%2F)](http://dotnetshoutout.com/Introducing%E2%80%A6-ActionLinq)

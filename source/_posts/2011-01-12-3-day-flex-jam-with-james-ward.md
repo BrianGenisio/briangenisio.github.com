@@ -1,12 +1,11 @@
 ---
 title: 3-Day Flex Jam with James Ward
-tags:
-  - Flex
-  - Jam
-id: 256
-categories:
-  - Uncategorized
 date: 2011-01-12 05:58:46
+layout: post
+category: Software
+tags: [Flex, Jam]
+permalink: /archives/2011/01/12/3-day-flex-jam-with-james-ward/
+
 ---
 
 [![FlexJamBig](http://houseofbilz.com/wp-content/uploads/2011/01/FlexJamBig.png "FlexJamBig")](http://flexjam2011.eventbrite.com/)If you want to learn Flex or simply want to hone your skills, you need to know about this 3-day Flex Jam. [SRT Solutions](http://www.srtsolutions.com/) of Ann Arbor, MI is hosting a Flex Jam on Februrary 15-17 with Adobe evangelist [James Ward](http://www.jamesward.com/).&#160; The format is simple:

@@ -1,12 +1,10 @@
 ---
 title: Mobile Smackdown -- Flex Edition
-tags:
-  - Flex
-  - Mobile
-id: 280
-categories:
-  - Uncategorized
 date: 2011-02-24 15:24:55
+layout: post
+category: Software
+tags: [Flex, Mobile]
+permalink: /archives/2011/02/24/mobile-smackdown-flex-edition/
 ---
 
 I posted a screencast of building a Flex Mobile application in 12 minutes.  It is a clone of the app they built in the Mobile Smackdown at CodeMash this year.

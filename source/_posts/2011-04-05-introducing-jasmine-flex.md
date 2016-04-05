@@ -1,14 +1,10 @@
 ---
 title: Introducing Jasmine-Flex
-tags:
-  - BDD
-  - Flex
-  - jasmine
-  - testing
-id: 300
-categories:
-  - Uncategorized
 date: 2011-04-05 11:14:43
+layout: post
+category: Software
+tags: [BDD, Flex, jasmine, testing]
+permalink: archives/2011/04/05/introducing-jasmine-flex/
 ---
 
 I have been developing software using Test Driven Development ([TDD](http://en.wikipedia.org/wiki/Test_driven_development)) for over three years now.  I usually use traditional xUnit style testing frameworks ([NUnit](http://www.nunit.org/), [JUnit](http://www.junit.org/), [jsUnit](http://www.jsunit.net/), [FlexUnit](http://www.flexunit.org/), [cppUnit](http://sourceforge.net/apps/mediawiki/cppunit/index.php?title=Main_Page "Main_Page"), etc) because they are the most accessible frameworks out there.

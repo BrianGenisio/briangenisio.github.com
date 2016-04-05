@@ -1,13 +1,10 @@
 ---
 title: Captive Runtime packaging in Air 3.0
-tags:
-  - Development
-  - Flash Builder
-  - Flex
-id: 313
-categories:
-  - Uncategorized
 date: 2011-10-11 17:42:09
+layout: post
+category: Software
+tags: [Development, Flash Builder, Flex]
+permalink: archives/2011/10/11/captive-runtime-packaging-in-air-3-0/
 ---
 
 When I talk with people about the Flex framework, many think of it as a Flash library. They often refer to Flex as a web framework that runs in a plug-in. To me, however, Flex is an application framework. To be honest, Flex in the browser doesn’t excite me. I am much more interested in using Flex on the desktop or on mobile devices.

@@ -1,23 +1,17 @@
 ---
 title: 'Cross-Training in Silverlight & Flex–Data Binding'
-tags:
-  - Cross-Training
-  - Data Binding
-  - Flex
-  - Silverlight
-id: 264
-categories:
-  - Uncategorized
 date: 2011-01-24 01:57:39
+layout: post
+category: Software
+tags: [Cross-Training, Data Bining, Flex, Silverlight]
+permalink: /archives/2011/01/24/cross-training-in-silverlight-flexdata-binding/
 ---
 
-More [Cross-Training in SIlverlight and Flex](http://houseofbilz.com/archives/2010/10/24/cross-training-in-silverlight-vs-flex/)
+More [Cross-Training in Silverlight and Flex](/archives/2010/10/24/cross-training-in-silverlight-vs-flex/)
 
-[![Shout it](http://dotnetshoutout.com/image.axd?url=http%3A%2F%2Fhouseofbilz.com%2Farchives%2F2011%2F01%2F24%2Fcross-training-in-silverlight-flexdata-binding%2F)](http://dotnetshoutout.com/Cross-Training-in-Silverlight-Flex-Data-Binding)
+One of the most powerful and compelling features of RIA frameworks like Silverlight and Flex is data binding.&#160; Data binding is where you declaratively state that a property in the view is “bound” to data in your model (or [presentation behavior layer](/archives/2010/12/29/cross-training-in-silverlight-flexmvvm-vs-presentation-model/)).&#160; This means that when the model data changes, the UI is updated.&#160; Conversely, when a user sets something in the UI layer, the model is then updated.
 
-One of the most powerful and compelling features of RIA frameworks like Silverlight and Flex is data binding.&#160; Data binding is where you declaratively state that a property in the view is “bound” to data in your model (or [presentation behavior layer](http://houseofbilz.com/archives/2010/12/29/cross-training-in-silverlight-flexmvvm-vs-presentation-model/)).&#160; This means that when the model data changes, the UI is updated.&#160; Conversely, when a user sets something in the UI layer, the model is then updated.
-
-This capability greatly increases the ability to write features by reducing the amount of value management code the developer has to write.&#160; Data binding makes patterns like [MVVM and Presentation Model](http://houseofbilz.com/archives/2010/12/29/cross-training-in-silverlight-flexmvvm-vs-presentation-model/) possible because it eliminates boiler-plate code that is often found in other patterns like Model-View-Presenter.&#160; Data binding, in my opinion, is one of the features of modern application stacks that sets them apart from their ancestors.
+This capability greatly increases the ability to write features by reducing the amount of value management code the developer has to write.&#160; Data binding makes patterns like [MVVM and Presentation Model](/archives/2010/12/29/cross-training-in-silverlight-flexmvvm-vs-presentation-model/) possible because it eliminates boiler-plate code that is often found in other patterns like Model-View-Presenter.&#160; Data binding, in my opinion, is one of the features of modern application stacks that sets them apart from their ancestors.
 
 In this article, I will discuss the different ways you might want to use data binding in Silverlight and Flex.&#160; I will describe how the approaches differ.&#160; You will see how similar they are as well.&#160; All of these examples can be found on my BitBucket site where all of my [“Cross-Training” examples](https://bitbucket.org/briangenisio/crosstraining/src) can be found.
   <div style="background-color: #e8f3ff">   
@@ -29,28 +23,30 @@ Data binding in Silverlight is purely declarative (as opposed to Flex, which is 
 #### <font style="font-weight: bold">Data Contexts</font>
 
 You define data contexts for a visual tree.&#160; When the data context is set, it remains in scope for all descendants in the visual tree unless is is set again.&#160; Data contexts can be set in XAML or in code and they can be any object.&#160; Here is an example of setting a data context that will be used for all of the examples to come:
-    <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;UserControl.Resources&gt;
-    &lt;local:DataModel x:Name=&quot;dataModel&quot; SimpleText=&quot;default&quot;&gt;
-        &lt;local:DataModel.Person&gt;
-            &lt;local:Person&gt;
-                &lt;local:Person.FullName&gt;
-                    &lt;local:PersonName First=&quot;Brian&quot; Last=&quot;Genisio&quot; /&gt;
-                &lt;/local:Person.FullName&gt;
-            &lt;/local:Person&gt;
-        &lt;/local:DataModel.Person&gt;
-    &lt;/local:DataModel&gt;
-&lt;/UserControl.Resources&gt;
-
-&lt;StackPanel DataContext=&quot;{StaticResource dataModel}&quot;&gt;
-&lt;/StackPanel&gt;</pre>
+```xml
+<UserControl.Resources>
+    <local:DataModel x:Name="dataModel" SimpleText="default">
+        <local:DataModel.Person>
+            <local:Person>
+                <local:Person.FullName>
+                    <local:PersonName First="Brian" Last="Genisio" />
+                </local:Person.FullName>
+            </local:Person>
+        </local:DataModel.Person>
+    </local:DataModel>
+</UserControl.Resources>
+<StackPanel DataContext="{StaticResource dataModel}">
+</StackPanel>
+```
 
 All of the examples in this post will be inside the **StackPanel** so they will inherit the data context from their visual parent.&#160; There are certainly other ways of setting the **DataContext** but this is how we will do it for this post.
 
 #### <font style="font-weight: bold">Basic Example</font>
 
 Now that we have seen an example of setting the data context, lets bind to the **SimpleText** property in the data model:
-
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;TextBlock Text=&quot;{Binding SimpleText}&quot; /&gt;</pre>
+```xml
+<TextBlock Text="{Binding SimpleText}" />
+```
 
 By using this simple binding syntax, the text block in the UI will show the value of **SimpleText**.&#160; In this case, the UI will show “default”.
 
@@ -61,10 +57,10 @@ Displaying data is great and very often, this is all you need.&#160; Often, thou
 Typically, this is done with the **INotifyPropertyChanged** interface.&#160; The interface defines one event – **PropertyChanged** – which sends the name of the property that changed.&#160; The interface is not specific to the UI layer but the UI layer knows how to process the event through the binding you created in the XAML.&#160; 
 
 This is how you implement **INotifyPropertyChanged **in the **DataModel** class:
-
-  <pre class="brush: csharp; ruler: true; gutter: false; toolbar: false;">public class DataModel : INotifyPropertyChanged
+```csharp
+public class DataModel : INotifyPropertyChanged
 {
-    private string _simpleText = &quot;first&quot;;
+    private string _simpleText = "first";
     public string SimpleText
     {
         get { return _simpleText; }
@@ -74,7 +70,7 @@ This is how you implement **INotifyPropertyChanged **in the **DataModel** class:
                 return;
 
             _simpleText = value;
-            OnPropertyChanged(&quot;SimpleText&quot;);
+            OnPropertyChanged("SimpleText");
         }
     }
 
@@ -86,7 +82,8 @@ This is how you implement **INotifyPropertyChanged **in the **DataModel** class:
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
-}</pre>
+}
+```
 
 The first part of this class defines the notifiable property using a common pattern.&#160; It uses a private backing store (**_simpleText**) and delegates to it in the property getter and setter.&#160; The setter checks to make sure the value has changed so it doesn’t send an event when nothing changed.&#160; It then sets the backing store and fires an event saying “SimpleText” has changed.
 
@@ -94,15 +91,19 @@ The second part of this code implements the event that was defined in the **INot
 
 Now that the **DataModel** can notify the UI of changes to **SimpleText**, you can can set the property being changed:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
-    &lt;TextBlock Text=&quot;{Binding SimpleText}&quot; /&gt;
-    &lt;Button Content=&quot;update text&quot; Click=&quot;UpdateSimpleText&quot; /&gt;
-&lt;/StackPanel&gt;</pre>
+```xml
+<StackPanel Orientation="Horizontal">
+    <TextBlock Text="{Binding SimpleText}" />
+    <Button Content="update text" Click="UpdateSimpleText" />
+</StackPanel>
+```
 
-  <pre class="brush: csharp; ruler: true; gutter: false; toolbar: false;">private void UpdateSimpleText(object sender, RoutedEventArgs e)
+```csharp
+private void UpdateSimpleText(object sender, RoutedEventArgs e)
 {
-    (Resources[&quot;dataModel&quot;] as DataModel).SimpleText = &quot;updated&quot;;
-}</pre>
+    (Resources["dataModel"] as DataModel).SimpleText = "updated";
+}
+```
 
 In this example, the value begins with “default” just as the before.&#160; When you press the “update text” button, the **SimpleText** property is modified.&#160; Internally, the property notifies the UI of the change and user sees “updated”.
 
@@ -112,23 +113,28 @@ Visual elements within Silverlight use a different mechanism for property notifi
 
 Dependency Properties are created imperatively in the code behind of the visual element.&#160; Add a Dependency Property to the **MainPage** user control:
 
-  <pre class="brush: csharp; ruler: true; gutter: false; toolbar: false;">public static DependencyProperty LocalTextProperty = 
-    DependencyProperty.Register(&quot;LocalText&quot;, 
+```csharp
+public static DependencyProperty LocalTextProperty = 
+    DependencyProperty.Register("LocalText", 
         typeof(String), typeof(MainPage), 
-        new PropertyMetadata(&quot;&quot;));
+        new PropertyMetadata(""));
 
 public string LocalText
 {
     get { return GetValue(LocalTextProperty) as string; }
     set { SetValue(LocalTextProperty, value); }
-}</pre>
+}
+```
+
 
 With this property created, you can now bind to a property in my user control, instead of a data object:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
-    &lt;TextBox Text=&quot;{Binding ElementName=root, Path=LocalText,  Mode=TwoWay}&quot; Width=&quot;100&quot; /&gt;
-    &lt;TextBox Text=&quot;{Binding ElementName=root, Path=LocalText}&quot; Width=&quot;100&quot; /&gt;
-&lt;/StackPanel&gt;</pre>
+```xml
+<StackPanel Orientation="Horizontal">
+    <TextBox Text="{Binding ElementName=root, Path=LocalText,  Mode=TwoWay}" Width="100" />
+    <TextBox Text="{Binding ElementName=root, Path=LocalText}" Width="100" />
+</StackPanel>
+```
 
 There are a few things to notice here:
 
@@ -142,10 +148,12 @@ In addition to binding to data, you may also need to bind to values in the view.
 
 You can bind to another element by name:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
-    &lt;TextBox Width=&quot;100&quot; x:Name=&quot;input&quot; /&gt;
-    &lt;TextBox Width=&quot;100&quot; Text=&quot;{Binding ElementName=input, Path=Text}&quot; /&gt;
-&lt;/StackPanel&gt;</pre>
+```xml
+<StackPanel Orientation="Horizontal">
+    <TextBox Width="100" x:Name="input" />
+    <TextBox Width="100" Text="{Binding ElementName=input, Path=Text}" />
+</StackPanel>
+```
 
 In this example, the text of the second **TextBox** is bound to the text of the first **TextBox**.&#160; Since this binding is not **TwoWay**, the value changes are not reciprocal.
 
@@ -153,7 +161,9 @@ In this example, the text of the second **TextBox** is bound to the text of the 
 
 In all the examples thus far, data binding has happened on a property of the data context.&#160; This may not be the case when the data’s object tree is more complex.&#160; You can get the **First** and **Last** name properties, which are properties of a different object, from the data model using property chaining:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;TextBlock Text=&quot;{Binding Person.FullName.First'}&quot; /&gt;</pre>
+```xml
+<TextBlock Text="{Binding Person.FullName.First'}" />
+```
 
 The same notification rules apply; the UI will update if **First** is a notifiable property.
 
@@ -161,7 +171,9 @@ The same notification rules apply; the UI will update if **First** is a notifiab
 
 If you need to format the text display of a given value, you can do so using the **StringFormat** attribute in the binding declaration.&#160; Building on the previous example, the text is displayed as “Your name is: Brian”:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;TextBlock Text=&quot;{Binding Person.FullName.First, StringFormat='Your name is: {0}'}&quot; /&gt;</pre>
+```xml
+<TextBlock Text="{Binding Person.FullName.First, StringFormat='Your name is: {0}'}" />
+```
 
 #### <font style="font-weight: bold">Value Converters</font>
 
@@ -169,16 +181,18 @@ Often, the format of the data is more complex than a simple string format.&#160;
 
 Here is an example displaying a number with two digits of precision:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;UserControl.Resources&gt;
-    &lt;local:NumberValueConverter x:Name=&quot;numeric&quot; Precision=&quot;2&quot; /&gt;
-&lt;/UserControl.Resources&gt;
+```xml
+<UserControl.Resources>
+    <local:NumberValueConverter x:Name="numeric" Precision="2" />
+</UserControl.Resources>
 
-&lt;TextBox Width=&quot;100&quot; x:Name=&quot;number&quot; /&gt;
-&lt;TextBlock Text=&quot;{Binding ElementName=number, Path=Text, Converter={StaticResource numeric}}&quot; /&gt;</pre>
-
+<TextBox Width="100" x:Name="number" />
+<TextBlock Text="{Binding ElementName=number, Path=Text, Converter={StaticResource numeric}}" />
+```
 The **NumberValueConverter** handles the conversion from a string value to a double and back to a string with the specified level of precision.&#160; There are not many built-in Value Converters, but they are easy to build:
 
-  <pre class="brush: csharp; ruler: true; gutter: false; toolbar: false;">public class NumberValueConverter : IValueConverter
+```csharp
+public class NumberValueConverter : IValueConverter
 {
     public NumberValueConverter()
     {
@@ -193,12 +207,12 @@ The **NumberValueConverter** handles the conversion from a string value to a dou
             return DependencyProperty.UnsetValue;
 
         if (string.IsNullOrWhiteSpace(value as string))
-            value = &quot;0&quot;;
+            value = "0";
 
-        if ((value as string).EndsWith(&quot;.&quot;))
-            value = value + &quot;0&quot;;
+        if ((value as string).EndsWith("."))
+            value = value + "0";
 
-        var format = string.Format(&quot;&#123;&#123;0:F&#123;0&#125;&#125;&quot;, Precision);
+        var format = string.Format("{{0:F{0}}", Precision);
 
         return string.Format(format, double.Parse(value as string));
     }
@@ -207,7 +221,8 @@ The **NumberValueConverter** handles the conversion from a string value to a dou
     {
         throw new System.NotImplementedException();
     }
-}</pre>
+}
+```
 
 #### <font style="font-weight: bold">Summary</font>
 
@@ -217,10 +232,6 @@ Next, let’s see how Flex implements the same features.
 
 </div>
 
-<div style="background-color: #ffe8e8">
-
-### <font style="font-weight: bold"></font>
-
 ### <font style="font-weight: bold">Data Binding in Flex</font>
 
 Data binding in Flex is expression-based (as opposed to Silveright, which is declarative).&#160; For any given property in the visual tree, the developer can use a binding syntax to declaratively state how to bind.&#160; Since Flex is expression-based, it does not require a data context like in Silverlight.&#160; These bindings can be created imperatively in code, but they are typically defined in MXML unless there is a more dynamic reason to do it differently.
@@ -229,16 +240,18 @@ Data binding in Flex is expression-based (as opposed to Silveright, which is dec
 
 To begin with, let us assume that we have a data object defined some place:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;fx:Declarations&gt;
-    &lt;local:DataObject id=&quot;dataObject&quot; simpleText=&quot;default&quot; /&gt;
-&lt;/fx:Dexlarations&gt;</pre>
-
+```xml
+<fx:Declarations>
+    <local:DataObject id="dataObject" simpleText="default" />
+</fx:Dexlarations>
+```
 #### <font style="font-weight: bold"></font>
 
 Since we named the data object with the id of **dataObject**, we can use it in a binding expression anywhere within scope:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;s:Label text=&quot;{dataObject.simpleText}&quot; /&gt;</pre>
-
+```xml
+<s:Label text="{dataObject.simpleText}" />
+```
 When the MXML code is compiled, the binding expression is compiled as well.&#160; It gets turned into ActionScript 3 code just like everything else in the MXML markup.&#160; The compiler re-writes the class to set the text from the **dataObject** object as defined in the expression.
 
 #### <font style="font-weight: bold">Change Notification</font>
@@ -247,11 +260,13 @@ Displaying data is great and very often, this is all you need.&#160; Often, thou
 
 Typically, this is done with Bindable Properties.&#160; This is how you do it in the **DataObject** class:
 
-  <pre class="brush: as3; ruler: true; gutter: false; toolbar: false;">[Bindable]
+```actionscript
+[Bindable]
 public class DataObject
 {
     public var simpleText:String;
-}</pre>
+}
+```
 
 Notice the [**Bindable]** meta tag that has been added to the **DataObject** class.&#160; This meta tag tells the Flex compiler to re-write the public properties in this class to be notifiable.&#160; It does this by employing the standard eventing mechanism found in ActionScript 3.&#160; 
 
@@ -259,8 +274,10 @@ In reality, the generated code looks a lot like the Silverlight notifiable prope
 
 Enough of the details.&#160; By doing this, you can have code like this that will update the text based on data binding when you press the button:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;s:Label text=&quot;{dataObject.simpleText}&quot; /&gt;
-&lt;s:Button label=&quot;update&quot; click=&quot;dataObject.simpleText = 'Updated'&quot; /&gt;</pre>
+```xml
+<s:Label text="{dataObject.simpleText}" />
+<s:Button label="update" click="dataObject.simpleText = 'Updated'" />
+```
 
 The Flex compiler parses the binding expression and listens to change events on the **dataObject** instance.&#160; When it changes, the **Label.text** property is set.&#160; All of this is generated for you.
 
@@ -268,14 +285,16 @@ The Flex compiler parses the binding expression and listens to change events on 
 
 It is easy to bind to local variables since reading a local variable is noting but an expression in Flex.&#160; For instance, you can define the variable as **[Bindable] **in the script block:
 
-  <pre class="brush: as3; ruler: true; gutter: false; toolbar: false;">[Bindable]
-private var localText:String = &quot;&quot;;</pre>
-
+```actionscript
+[Bindable]
+private var localText:String = "";
+```
 Then you simply bind to the variable:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;s:TextInput text=&quot;@{localText}&quot; /&gt;
-&lt;s:TextInput text=&quot;{localText}&quot; /&gt;</pre>
-
+```xml
+<s:TextInput text="@{localText}" />
+<s:TextInput text="{localText}" />
+```
 Notice that the first text box use the “@” symbol.&#160; This tells the binding system that the binding is two-way.&#160; In other words, anything typed into the first **TextInput** will get set in the **localText** variable and then sent back to the second **TextInput**.
 
 #### <font style="font-weight: bold">Using Expressions</font>
@@ -284,22 +303,28 @@ Notice that the first text box use the “@” symbol.&#160; This tells the bind
 
 The power of using expressions for data binding becomes obvious when you call methods within the binding.&#160; In this example, we can add two values using data binding alone.&#160; When **a** or **b** change, the binding expression is automatically re-evaluated, causing the output to change:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;s:TextInput id=&quot;a&quot; /&gt;
-&lt;s:TextInput id=&quot;b&quot; /&gt;
-&lt;s:Label text=&quot;a + b = {add(Number(a.text), Number(b.text))}&quot; /&gt;</pre>
+```xml
+<s:TextInput id="a" />
+<s:TextInput id="b" />
+<s:Label text="a + b = {add(Number(a.text), Number(b.text))}" />
+```
 
 Although I don’t recommend putting too much logic in the binding expressions, the power provided here is quite amazing.&#160; One way I find myself using this feature while implementing the Presentation Model pattern is by hiding elements based on if data exists.&#160; A simple example of binding the **visible** property to the existence of the **nullableObject** variable:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;s:Label text=&quot;Value is not null&quot; visible=&quot;{nullableObject != null}&quot; /&gt;
-&lt;s:Button label=&quot;Make null&quot; click=&quot;nullableObject = null&quot; /&gt;
-&lt;s:Button label=&quot;Set value&quot; click=&quot;nullableObject = 'something'&quot; /&gt;</pre>
+```xml
+<s:Label text="Value is not null" visible="{nullableObject != null}" />
+<s:Button label="Make null" click="nullableObject = null" />
+<s:Button label="Set value" click="nullableObject = 'something'" />
+```
 
 #### <font style="font-weight: bold">Binding to Other Elements</font>
 
 In addition to binding to data, you may also need to bind to values in the view.&#160; You can bind to another element by **id** since setting an **id** on a visual element automatically references it in a variable of the same name:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;s:TextInput id=&quot;input&quot; /&gt;
-&lt;s:TextInput text=&quot;{input.text}&quot; /&gt;</pre>
+```xml
+<s:TextInput id="input" />
+<s:TextInput text="{input.text}" />
+```
 
 In this example, the text of the second **TextInput **is bound to the text of the first **TextInput**.&#160; Since this binding is not **TwoWay**, the value changes are not reciprocal.
 
@@ -307,18 +332,20 @@ In this example, the text of the second **TextInput **is bound to the text of th
 
 In all the examples thus far, data binding has happened on a property of a single object.&#160; This may not be the case when the data’s object tree is more complex.&#160; You can get the **First** and **Last** name properties out of the data model by using property chaining:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;fx:Declarations&gt;
-    &lt;fx:Model id=&quot;model&quot;&gt;
-        &lt;person&gt;
-            &lt;name&gt;
-                &lt;first&gt;Brian&lt;/first&gt;
-                &lt;last&gt;Genisio&lt;/last&gt;
-            &lt;/name&gt;
-        &lt;/person&gt;
-    &lt;/fx:Model&gt;
-&lt;/fx:Declarations&gt;
+```xml
+<fx:Declarations>
+    <fx:Model id="model">
+        <person>
+            <name>
+                <first>Brian</first>
+                <last>Genisio</last>
+            </name>
+        </person>
+    </fx:Model>
+</fx:Declarations>
 
-&lt;s:Label text=&quot;{model.name.first}&quot; /&gt;</pre>
+<s:Label text="{model.name.first}" />
+```
 
 The same notification rules apply; meaning that the UI will update if **First** is a notifiable property.&#160; In the case of **fx:Model**, all properties are inherently bindable.
 
@@ -328,8 +355,9 @@ In order for change notification to occur on the chained properties to update on
 
 Since data binding is based on an evaluated expression, adding text before or after the bound value is very easy:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;s:Label text=&quot;Your name is: {model.name.first}&quot; /&gt;</pre>
-
+```xml
+<s:Label text="Your name is: {model.name.first}" />
+```
 <font style="font-weight: bold"></font>
 
 In this example, the UI will display “Your name is: Brian”.
@@ -338,16 +366,16 @@ In this example, the UI will display “Your name is: Brian”.
 
 Since data binding is based on expressions, data can be formatted using functions in the expression that get evaluated every time a bindable property changes.&#160; In addition, Flex provides several formatters out of the box.&#160; The following example shows how to set the precision of a double value to 2 digits after the decimal place:
 
-  <pre class="brush: xml; ruler: true; gutter: false; toolbar: false;">&lt;fx:Declarations&gt;
-    &lt;mx:NumberFormatter id=&quot;numeric&quot; precision=&quot;2&quot; /&gt;
-&lt;/fx:Declarations&gt;
+```xml
+<fx:Declarations>
+    <mx:NumberFormatter id="numeric" precision="2" />
+</fx:Declarations>
 
-&lt;s:TextInput id=&quot;number&quot; /&gt;
-&lt;s:Label text=&quot;{numeric.format(Number(number.text))}&quot; /&gt;</pre>
-
+<s:TextInput id="number" />
+<s:Label text="{numeric.format(Number(number.text))}" />
+```
 Whenever the **number.text** property changes, it uses the **NumberFormatter** to evaluate the text in the **Label.&#160; **In addition to the numerous built-in formatters (currency, date, phone number, etc), you can create your own formatters by extending **Formatter**.&#160; 
 
-</div>
 
 ### <font style="font-weight: bold">Summary</font>
 
@@ -355,4 +383,4 @@ The capabilities provided by data binding in Silverlight and Flex give the devel
 
 I am VERY curious to see how C# 5 with the compiler as a service adds value to the binding story in Silverlight.&#160; Will we see an optional expression-based binding that is compiled and evaluated at runtime?&#160; If not, how hard will it be to write this?
 
-Next time, I will write about visualizing data in Silverlight and Flex. Stay tuned ![Smile](http://houseofbilz.com/wp-content/uploads/2011/01/wlEmoticon-smile.png)
+Next time, I will write about visualizing data in Silverlight and Flex. Stay tuned 
