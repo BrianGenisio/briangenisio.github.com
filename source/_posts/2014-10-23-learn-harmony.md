@@ -16,5 +16,4 @@ There are a couple of fun things regarding this:
  - This site was built with [Traceur](https://github.com/google/traceur-compiler) and the REPL window also uses Traceur.
 
 Have Fun!
-# [LearnHarmony](http://LearnHarmony.com)
 

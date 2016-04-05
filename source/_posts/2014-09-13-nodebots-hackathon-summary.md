@@ -6,7 +6,7 @@ category: Software
 tags: [NodeBots, Arduino, Johnny-Five]
 permalink: software/2014/09/13/nodebots-hackathon-summary.html
 ---
-# Our NodeBots Hackathon
+## Our NodeBots Hackathon
 I discussed the plans for our ["Battle of the NodeBots" Hackathon project](/software/2014/08/23/rise-of-the-nodebots.html)  a couple of weeks ago.  The outcome was much better than I had expected.  The creativity unleashed for that one day was enough to fuel us for months.  
 
 We had offensive bots using spinning bashers, propellors, flippers, and quarter dumping.  We had agile bots, employing wireless communication and sophisticated control mechanisms.  We had defensive bots which used a 5 pound weight to increase mass.  We had a sabotage bot which created electromagnetic fields to disrupt their oponents' electronics.  We even had an "Empirial Walker" style robot which slowly approached its opponent with friction on its side.
