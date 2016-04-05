@@ -13,7 +13,12 @@ For my data store, I have been playing with a new (currently in Beta) service ca
 
 This series will be broken into several parts:
 
-1.  Introduction (this page)2.  [A Proxy Server for Parse.com](http://houseofbilz.com/archives/2011/11/07/a-proxy-server-for-parse-com/)3.  [Making Backbone.js Work with Parse.com](http://houseofbilz.com/archives/2011/11/07/making-backbone-js-work-with-parse-com/)4.  [Working with Backbone.js and the Parse.com Proxy](http://houseofbilz.com/archives/2011/11/09/working-with-backbone-js-and-the-parse-com-proxy/)5.  [Building an Application with Parse.com Models](http://houseofbilz.com/archives/2011/11/30/an-example-backboneparse-com-app/)6.  [Hosting the Todos example on Heroku (Bonus)](http://houseofbilz.com/archives/2011/11/30/hosting-the-todos-example-on-heroku/)  
+1.  Introduction (this page)
+2.  [A Proxy Server for Parse.com](/archives/2011/11/07/a-proxy-server-for-parse-com/)
+3. [Making Backbone.js Work with Parse.com](/archives/2011/11/07/making-backbone-js-work-with-parse-com/)
+4. [Working with Backbone.js and the Parse.com Proxy](/archives/2011/11/09/working-with-backbone-js-and-the-parse-com-proxy/)
+5. [Building an Application with Parse.com Models](/archives/2011/11/30/an-example-backboneparse-com-app/)
+6. [Hosting the Todos example on Heroku (Bonus)](/archives/2011/11/30/hosting-the-todos-example-on-heroku/)  
 
 All of the code (front-end and back-end) in these examples will be written in [CoffeeScript](http://jashkenas.github.com/coffee-script/) but there is no reason you can’t do the same thing with Javascript.&#160; Let me know if you find this short series useful.&#160; 
 

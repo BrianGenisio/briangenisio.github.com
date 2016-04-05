@@ -1,56 +1,50 @@
 ---
 title: Making Backbone.js Work with Parse.com
-tags:
-  - CoffeeScript
-  - Development
-  - HTML5
-  - Javascript
-  - Node.js
-  - Parse.com
-  - Technology
-  - Web
-id: 374
-categories:
-  - Uncategorized
 date: 2011-11-07 20:40:45
+layout: post
+category: Software
+tags: [CoffeeScript, Development, HTML5, JavaScript, Heroku, Backbone, Node.js, Parse.com, Technology, Web]
+permalink: archives/2011/11/07/making-backbone-js-work-with-parse-com/
 ---
 
-[Series Overview](http://houseofbilz.com/archives/2011/11/07/going-mostly-server-less-with-backbone-js/)     
-[&lt;&lt; A Proxy Server for Parse.com](http://houseofbilz.com/archives/2011/11/07/a-proxy-server-for-parse-com/)&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; [Working with Backbone.js and the Parse.com proxy &gt;&gt;](http://houseofbilz.com/archives/2011/11/09/working-with-backbone-js-and-the-parse-com-proxy/)
+[Series Overview](/archives/2011/11/07/going-mostly-server-less-with-backbone-js/)     
+[&lt;&lt; A Proxy Server for Parse.com](/archives/2011/11/07/a-proxy-server-for-parse-com/)&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; [Working with Backbone.js and the Parse.com proxy &gt;&gt;](/archives/2011/11/09/working-with-backbone-js-and-the-parse-com-proxy/)
 
 In the previous post, I showed how you can create a minimal server that proxies requests on to [Parse.com](http://parse.com) for back-end data storage.
 
 Next, I need to consider the [Backbone.js](http://documentcloud.github.com/backbone/) side of things.&#160; Backbone gives a really great way of describing models and collections as long as the data conforms to its REST flavor.&#160; Unfortunately, Parse.com does things a little bit differently.&#160; I have encapsulated this code into some base prototypes that can be used later.&#160; 
 
 **parse.com.coffee**
-  <pre class="brush: coffeescript; ruler: true; toolbar: false; smart-tabs: false;">class Backbone.ParseCollection extends Backbone.Collection
-  parse: (resp, xhr) -&gt;
+```coffee
+class Backbone.ParseCollection extends Backbone.Collection
+  parse: (resp, xhr) ->
     data = super
     data.results
 
-  fetch: (options) -&gt;
+  fetch: (options) ->
     if options?.query?
-      options.data = &quot;where=&quot; + JSON.stringify options.query
+      options.data = "where=" + JSON.stringify options.query
       delete options.query
     super
 
 class Backbone.ParseModel extends Backbone.Model
-  setId: (data) -&gt;
+  setId: (data) ->
     data.id = data.objectId unless data.id
     data
 
-  constructor: (model) -&gt;
+  constructor: (model) ->
     @setId model
     super
 
-  parse: (resp, xhr) -&gt;
+  parse: (resp, xhr) ->
     @setId super
 
-  toJSON: () -&gt;
+  toJSON: () ->
     result = super
     delete result.createdAt
     delete result.updatedAt
-    result</pre>
+    result
+```
 
 These base classes help me to adapt the data and behavior of Parse.com:
 
@@ -72,6 +66,6 @@ Parse.com includes two metadata fields: “createdAt” and “updatedAt”.&#16
 
 We now have base prototypes that allow us to communicate with the server.&#160; Instead of extending Backbone.Model and Backbone.Collection, you should make your models extend Backbone.ParseModel and Backbone.ParseCollection.&#160; 
 
-In the next post, I will show how to do this and we will play in the browser a bit in order to show [how Backbone.js models and collections interact with the proxy server](http://houseofbilz.com/archives/2011/11/09/working-with-backbone-js-and-the-parse-com-proxy/). 
+In the next post, I will show how to do this and we will play in the browser a bit in order to show [how Backbone.js models and collections interact with the proxy server](/archives/2011/11/09/working-with-backbone-js-and-the-parse-com-proxy/). 
 
   

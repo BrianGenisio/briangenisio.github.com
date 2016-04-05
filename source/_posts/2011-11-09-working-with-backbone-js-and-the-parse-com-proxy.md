@@ -1,25 +1,17 @@
 ---
 title: Working with Backbone.js and the Parse.com Proxy
-tags:
-  - CoffeeScript
-  - Development
-  - HTML5
-  - Javascript
-  - Node.js
-  - Parse.com
-  - Technology
-  - Web
-id: 381
-categories:
-  - Uncategorized
 date: 2011-11-09 11:32:19
+layout: post
+category: Software
+tags: [CoffeeScript, Development, HTML5, JavaScript, Heroku, Backbone, Node.js, Parse.com, Technology, Web]
+permalink: archives/2011/11/09/working-with-backbone-js-and-the-parse-com-proxy/
 ---
 
-[Series Overview](http://houseofbilz.com/archives/2011/11/07/going-mostly-server-less-with-backbone-js/) 
+[Series Overview](/archives/2011/11/07/going-mostly-server-less-with-backbone-js/) 
 
-[&lt;&lt; Making Backbone.js Work with Parse.com](http://houseofbilz.com/archives/2011/11/07/making-backbone-js-work-with-parse-com/)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[An Example Backbone/Parse.com App &gt;&gt;](http://houseofbilz.com/archives/2011/11/30/an-example-backboneparse-com-app/)
+[&lt;&lt; Making Backbone.js Work with Parse.com](/archives/2011/11/07/making-backbone-js-work-with-parse-com/)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[An Example Backbone/Parse.com App &gt;&gt;](/archives/2011/11/30/an-example-backboneparse-com-app/)
 
-In the [last post](http://houseofbilz.com/archives/2011/11/07/making-backbone-js-work-with-parse-com/), I presented some base prototypes for Backbone.js models and collections that play nicely with Parse.com
+In the [last post](/archives/2011/11/07/making-backbone-js-work-with-parse-com/), I presented some base prototypes for Backbone.js models and collections that play nicely with Parse.com
 
 Next, I will put all the pieces together and show how to use Backbone.js with Parse.com.&#160; All of the code is available on GitHub. [https://github.com/BrianGenisio/Parseback/tree/parse.com-proxy-with-backbone.js](https://github.com/BrianGenisio/Parseback/tree/parse.com-proxy-with-backbone.js)
 
@@ -35,35 +27,38 @@ Once you crate the App, you will be given an **Application Id** and a **Master K
 
 ### Create the model and collections (<font style="font-weight: bold">people.coffee</font>)
 
-The model and collection extends from **ParseModel** and **ParseCollection** described in the [last post](http://houseofbilz.com/archives/2011/11/07/making-backbone-js-work-with-parse-com/).
+The model and collection extends from **ParseModel** and **ParseCollection** described in the [last post](/archives/2011/11/07/making-backbone-js-work-with-parse-com/).
 
-<pre class="brush: coffeescript; ruler: true; toolbar: false; smart-tabs: false;">window.app = 
+```coffee
+window.app = 
   models: {}
   collections: {}
 
 class app.models.Person extends Backbone.ParseModel
-  urlRoot: &quot;/data/People&quot;
+  urlRoot: "/data/People"
 
 class app.collections.People extends Backbone.ParseCollection
   model: app.models.Person
-  url: &quot;/data/People&quot;</pre>
+  url: "/data/People"
+```
 
 ### Create <font style="font-weight: bold">index.html</font>
+```html
+<html>
+<head>
+  <script type="text/javascript" src="/vendor/jquery-1.6.2.js"></script>
+  <script type="text/javascript" src="/vendor/underscore-1.1.7.js"></script>
+  <script type="text/javascript" src="/vendor/backbone-0.5.3.js"></script>
 
-<pre class="brush: xml; ruler: true; toolbar: false; smart-tabs: false;">&lt;html&gt;
-&lt;head&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;/vendor/jquery-1.6.2.js&quot;&gt;&lt;/script&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;/vendor/underscore-1.1.7.js&quot;&gt;&lt;/script&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;/vendor/backbone-0.5.3.js&quot;&gt;&lt;/script&gt;
-
-  &lt;script type=&quot;text/javascript&quot; src=&quot;app.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
+  <script type="text/javascript" src="app.js"></script>
+</head>
+<body>
   Use the developer tools in your browser to play
-&lt;/body&gt;
-&lt;/html&gt;</pre>
+</body>
+</html>
+```
 
-### Run the [proxy server](http://houseofbilz.com/archives/2011/11/07/a-proxy-server-for-parse-com/)
+### Run the [proxy server](/archives/2011/11/07/a-proxy-server-for-parse-com/)
 
 ![](http://content.screencast.com/users/BrianGenisio/folders/Snagit/media/8321bda4-3108-41b1-a228-62d255f2de75/2011-11-09_05-47-46.png)
 
@@ -121,4 +116,4 @@ Queries can be [more complex](https://www.parse.com/docs/rest#data-querying).&#1
 
 I’ve illustrated how easy it is to use Backbone.js to work with the Parse.com backend.&#160; Everything available in the REST API is abstracted with the **Model** and **Collection** paradigm that Backbone provides.&#160; By placing a small proxy between your HTML client and Parse.com, you can quickly build single-paged applications and forget about the back-end. (For data-centric apps)
 
-In my next post, I will give an [example of a single-paged application that uses Parse.com as the back-end.](http://houseofbilz.com/archives/2011/11/30/an-example-backboneparse-com-app/)
+In my next post, I will give an [example of a single-paged application that uses Parse.com as the back-end.](/archives/2011/11/30/an-example-backboneparse-com-app/)
