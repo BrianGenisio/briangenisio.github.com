@@ -79,7 +79,7 @@ fancybox: true
 # Miscellaneous
 google_analytics:
 favicon: /favicon.png
-
+disqus_shortname: briangenisio
 
 
 # Deployment
