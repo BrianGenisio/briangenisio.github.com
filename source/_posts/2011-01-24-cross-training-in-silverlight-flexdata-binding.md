@@ -198,7 +198,7 @@ The **NumberValueConverter** handles the conversion from a string value to a dou
         if ((value as string).EndsWith(&quot;.&quot;))
             value = value + &quot;0&quot;;
 
-        var format = string.Format(&quot;{{0:F{0}}}&quot;, Precision);
+        var format = string.Format(&quot;&#123;&#123;0:F&#123;0&#125;&#125;&quot;, Precision);
 
         return string.Format(format, double.Parse(value as string));
     }
