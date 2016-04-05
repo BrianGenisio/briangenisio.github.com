@@ -1,25 +1,17 @@
 ---
 title: An Example Backbone/Parse.com App
-tags:
-  - CoffeeScript
-  - Development
-  - HTML5
-  - Javascript
-  - Node.js
-  - Parse.com
-  - Technology
-  - Web
-id: 396
-categories:
-  - Uncategorized
 date: 2011-11-30 20:02:15
+layout: post
+category: Software
+tags: [CoffeeScript, Development, HTML5, JavaScript, Heroku, Backbone, Node.js, Parse.com, Technology, Web]
+permalink: archives/2011/11/30/an-example-backboneparse-com-app/
 ---
 
-[Series Overview](http://houseofbilz.com/archives/2011/11/07/going-mostly-server-less-with-backbone-js/)
+[Series Overview](/archives/2011/11/07/going-mostly-server-less-with-backbone-js/)
 
-[&lt;&lt; Working with Backbone.js and the Parse.com Proxy](http://houseofbilz.com/archives/2011/11/09/working-with-backbone-js-and-the-parse-com-proxy/)&nbsp;&nbsp;&nbsp;&nbsp;[Hosting the Todos example on Heroku &gt;&gt;](http://houseofbilz.com/archives/2011/11/30/hosting-the-todos-example-on-heroku/)
+[&lt;&lt; Working with Backbone.js and the Parse.com Proxy](/archives/2011/11/09/working-with-backbone-js-and-the-parse-com-proxy/)&nbsp;&nbsp;&nbsp;&nbsp;[Hosting the Todos example on Heroku &gt;&gt;](/archives/2011/11/30/hosting-the-todos-example-on-heroku/)
 
-This is the post where I put it all together.&#160; I showed how to create a proxy to [use Parse.com as your data store](http://houseofbilz.com/archives/2011/11/07/a-proxy-server-for-parse-com/).&#160; I also showed how to [modify Backbone.js to use Parse.com](http://houseofbilz.com/archives/2011/11/07/making-backbone-js-work-with-parse-com/).&#160; Now, I will show how easy it is to use Backbone.js models and collections with a service like Parse.com.&#160; Note that Parse.com is not the only service out there that does this.&#160; StackMob is another example of a “place to put your stuff” service.&#160; There are others.
+This is the post where I put it all together.&#160; I showed how to create a proxy to [use Parse.com as your data store](/archives/2011/11/07/a-proxy-server-for-parse-com/).&#160; I also showed how to [modify Backbone.js to use Parse.com](/archives/2011/11/07/making-backbone-js-work-with-parse-com/).&#160; Now, I will show how easy it is to use Backbone.js models and collections with a service like Parse.com.&#160; Note that Parse.com is not the only service out there that does this.&#160; StackMob is another example of a “place to put your stuff” service.&#160; There are others.
 
 In this app, I will borrow from the default [Backbone.js](http://documentcloud.github.com/backbone/) example: Todos.&#160; [Todos](http://documentcloud.github.com/backbone/#examples-todos) is a simple to-do list, which uses the browser’s local storage to save data.&#160; 
 ![](http://content.screencast.com/users/BrianGenisio/folders/Snagit/media/f0dd85a2-2d24-43c6-bb73-1319e835105a/2011-11-30_14-22-43.png)
@@ -40,18 +32,23 @@ There are only a few tiny steps to make this work:
 The example given with Backbone.js uses the “localstorage” override for Backbone.sync.&#160; We want to use the default REST version Backbone.sync so we remove it.&#160; We also want to use the base prototypes to adapt Parse.com to Backbone.
 
 <font face="Courier New"><strike>&lt;script src=&quot;backbone-localstorage.js&quot;&gt;&lt;/script&gt; 
+</strike></font>
 
-</strike>&lt;script src=”parse.com.js&quot;&gt;&lt;/script&gt;</font>
+```html
+<script src=”parse.com.js"></script>;
+```
 
 ### 2a. Modify the model
 
 The example uses a vanilla Backbone.Model.&#160; Instead, change it to Backbone.ParseModel and give it the location of the data.
 
-<font face="Courier New"><strike>window.Todo = Backbone.Model.extend({ 
+<font face="Courier New"><strike>window.Todo = Backbone.Model.extend({ </strike></font>
 
-</strike>window.Todo = Backbone.ParseModel.extend({ 
+```javascript
+window.Todo = Backbone.ParseModel.extend({
+    urlRoot: "/data/Todos",
+```
 
-&#160;&#160;&#160; urlRoot: &quot;/data/Todos&quot;,</font>
 
 ### 2b. Modify the Collection
 
@@ -59,9 +56,12 @@ The example uses a Backbone.Collection.&#160; Instead, change it to Backbone.Par
 
 <font face="Courier New"><strike>window.TodoList = Backbone.Collection.extend({ 
 
-</strike>window.TodoList = Backbone.ParseCollection.extend({ 
+</strike></font>
 
-&#160;&#160;&#160; url: &quot;/data/Todos&quot;,</font>
+```javascript
+window.TodoList = Backbone.ParseCollection.extend({
+    url: "/data/Todos",
+```
 
 Also, since we aren’t using local storage, remove the localStore details.
 
@@ -75,14 +75,19 @@ That is all you need to do in order to modify the app.&#160; Everything else is 
 
 Use the Application ID and Master Key and edit the config.coffee file:
 
-<pre class="brush: coffeescript; ruler: true; toolbar: false; smart-tabs: false;">applicationID: 'APPLICATION ID' 
+```coffee
+applicationID: 'APPLICATION ID' 
 masterKey:    'MASTER KEY' 
 apiPath:  '/data/'
-port:     3001</pre>
+port:     3001
+```
+
 
 ### 4\. Run the proxy:
 
-<font face="Courier New">&gt; coffee proxy.coffee</font>
+```bash
+> coffee proxy.coffee
+```
 
 ### Test the app
 
@@ -102,4 +107,4 @@ That was insanely easy.&#160; You just need to tell you models and collections t
 
 If anyone finds this useful, I would be curious to know if it helps.&#160;  If you want the source code for this project, take a look at [the GitHub project](https://github.com/BrianGenisio/todos-parseback) 
 
-As a bonus, I wrote up the modifications I needed to make in order to [host the Parse-backed Todos example on Heroku](http://houseofbilz.com/archives/2011/11/30/hosting-the-todos-example-on-heroku/).  It was really easy and worth the writeup. 
+As a bonus, I wrote up the modifications I needed to make in order to [host the Parse-backed Todos example on Heroku](/archives/2011/11/30/hosting-the-todos-example-on-heroku/).  It was really easy and worth the writeup. 

@@ -1,18 +1,10 @@
 ---
 title: Going (Mostly) Server-less with Backbone.js
-tags:
-  - CoffeeScript
-  - Development
-  - HTML5
-  - Javascript
-  - Node.js
-  - Parse.com
-  - Technology
-  - Web
-id: 363
-categories:
-  - Uncategorized
 date: 2011-11-07 11:19:36
+layout: post
+category: Software
+tags: [JavaScript, CoffeeScript, Heroku, Development, HTML5, Backbone, Node.js, Parse.com, Technology, Web]
+permalink: archives/2011/11/07/going-mostly-server-less-with-backbone-js/
 ---
 
 I have been having a lot of fun with [Backbone.js](http://documentcloud.github.com/backbone/) and [CoffeeScript](http://jashkenas.github.com/coffee-script/) lately.&#160; It is my new programming obsession.&#160; They go together like chocolate and coffee.&#160; Along with this work, I have had the fantasy of going server-less and pushing all of my data stores to a back-end that I don’t have to code or manage myself.&#160; I mean, how cool would that be?&#160; To develop a browser-based application complete with data storage without a server is boss if you ask me.
