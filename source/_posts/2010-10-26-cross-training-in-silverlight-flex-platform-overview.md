@@ -1,22 +1,14 @@
 ---
 title: 'Cross-Training in Silverlight & Flex – Platform Overview'
-tags:
-  - Cross-Training
-  - Flex
-  - Platform
-  - Silverlight
-id: 161
-categories:
-  - Uncategorized
-date: 2010-10-26 18:39:38
+layout: post
+category: Software
+tags: [Cross-Training, Flex, RIA, Silverlight]
+permalink: /archives/2010/10/26/cross-training-in-silverlight-flex-platform-overview/
 ---
 
-More [Cross-Training in SIlverlight &amp; Flex](http://houseofbilz.com/archives/2010/10/24/cross-training-in-silverlight-vs-flex/)
-
-[![Shout it](http://dotnetshoutout.com/image.axd?url=http%3A%2F%2Fhouseofbilz.com%2Farchives%2F2010%2F10%2F26%2Fcross-training-in-silverlight-flex-platform-overview%2F)](http://dotnetshoutout.com/Cross-Training-in-Silverlight-Flex-Platform-Overview) 
+More [Cross-Training in SIlverlight &amp; Flex](/archives/2010/10/24/cross-training-in-silverlight-vs-flex/)
 
 This is the second article in which I will compare the technical details between Silverlight and Flex. Before I jump into the nitty-gritty of the two, I thought I would give a general overview of the platforms that are Silverlight and Flex/Flash/Air. Understand these terms and the tools up front will make it much easier to cross-train on the two technologies.
-  <div style="background-color: #e8f3ff">   
 
 ### The Silverlight Platform
 
@@ -34,7 +26,6 @@ Much like Flex, Silverlight employs a declarative UI mechanism ([XAML](http://en
 
 Most Silverlight applications are developed using a version of [Visual Studio](http://www.microsoft.com/visualstudio/en-us/visual-studio-2010-launch?WT.mc_id=SEARCH&amp;WT.srch=1), which is an [IDE](http://en.wikipedia.org/wiki/Integrated_development_environment) similar to [Flash Builder](http://www.adobe.com/products/flashbuilder/).&#160; Visual Studio comes in many flavors. [Visual Web Developer Express](http://www.microsoft.com/web/gallery/install.aspx?appid=silverlight4tools;silverlight4toolkit;riaservicestoolkit) is free and great for getting started. Most likely, as you get more involved with Silverlight, you will need to migrate to a paid version (Professional, Premium, Ultimate or Test). Although highly recommended, you do not need to use Visual Studio to develop Silverlight applications – the [free SDK](http://www.microsoft.com/downloads/en/details.aspx?FamilyID=b3deb194-ca86-4fb6-a716-b67c2604a139&amp;displaylang=en) and command-line compilers are enough to build applications with. The open-source [MonoDevelop](http://monodevelop.com/) is also an option for developing Silverlight applications. It is worth noting that Visual Studio is only available for Windows. Mac developers have the tools to develop [Silverlight applications using Eclipse](http://www.eclipse4sl.org/) but this rarely happens.
 
-#### 
 
 #### SDKs and Toolkits
 
@@ -52,8 +43,6 @@ Silverlight does not have the same operating system penetration as Flex/Flash. M
 
 The easiest way to get started with Silverlight is at [Silverlight.net](http://www.silverlight.net/getstarted/). From there, you can download all of the tools necessary to write applications in SIlverlight (Visual Web Developer, Expression Blend trial, Silverlight toolkit, etc)
 
-&#160;
- </div>  <div style="background-color: #ffe8e8">   
 
 ### The Flex/Flash/Air Platform
 
@@ -84,4 +73,4 @@ Flex has a rich set of operating system support. Flex already works in Flash (br
 #### Getting Started
 
 The easiest way to get started is to go to the [Flex product site](http://www.adobe.com/products/flex/) and download the 60 day [Flash Builder demo](http://www.adobe.com/products/flashbuilder/). Adobe also has demos of Catalyst, Photoshop and Illustrator.
- </div>
+ 
