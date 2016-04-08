@@ -5,6 +5,7 @@ categories:
   - Uncategorized
 date: 2009-10-20 13:52:00
 tags:
+permalink: /archives/2009/10/20/adventures-in-mvvm-a-rails-inspired-viewmodel/
 ---
 
 [More Adventures in MVVM](http://houseofbilz.com/archives/2009/05/22/adventures-in-mvvm-model-view-viewmodel/) [![Shout it](http://dotnetshoutout.com/image.axd?url=http%3A%2F%2Fgeekswithblogs.net%2FHouseOfBilz%2Farchive%2F2009%2F10%2F20%2Fadventures-in-mvvm-ndash-a-rails-inspired-viewmodel.aspx)](http://dotnetshoutout.com/Adventures-in-MVVM-A-Rails-Inspired-ViewModel) [![kick it on DotNetKicks.com](http://www.dotnetkicks.com/Services/Images/KickItImageGenerator.ashx?url=http%3a%2f%2fgeekswithblogs.net%2fHouseOfBilz%2farchive%2f2009%2f10%2f20%2fadventures-in-mvvm-ndash-a-rails-inspired-viewmodel.aspx)](http://www.dotnetkicks.com/kick/?url=http%3a%2f%2fgeekswithblogs.net%2fHouseOfBilz%2farchive%2f2009%2f10%2f20%2fadventures-in-mvvm-ndash-a-rails-inspired-viewmodel.aspx)
