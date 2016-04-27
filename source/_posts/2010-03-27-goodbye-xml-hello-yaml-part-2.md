@@ -7,7 +7,7 @@ tags: [XML, YAML]
 permalink: /archives/2010/03/27/goodbye-xml-hello-yaml-part-2/
 ---
 
-[Part 1](/archive/2010/02/21/goodbye-xmlhellip-hello-yaml-part-1.aspx)
+[Part 1](/archives/2010/02/21/goodbye-xml-hello-yaml-part-1/)
 
 After I explained my motivation for using YAML instead of XML for my data, I got a lot of people asking me what type of tooling is available in the .Net space for consuming YAML.&#160; In this post, I will discuss a nice tooling option as well as describe some small modifications to leverage the extremely powerful dynamic capabilities of C# 4.0.&#160; I will be referring to the following YAML file throughout this post
 
