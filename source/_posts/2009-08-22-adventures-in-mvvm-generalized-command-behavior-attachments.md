@@ -1,113 +1,103 @@
 ---
 title: Adventures in MVVM – Generalized Command Behavior Attachments
-id: 76
-categories:
-  - Uncategorized
 date: 2009-08-22 01:45:00
-tags:
+layout: post
+category: Software
+tags: [MVVM]
+permalink: /archives/2009/08/22/adventures-in-mvvm-generalized-command-behavior-attachments/
 ---
 
-[More Adventures in MVVM](http://houseofbilz.com/archives/2009/05/22/adventures-in-mvvm-model-view-viewmodel/)&#160; [![Shout it](http://dotnetshoutout.com/image.axd?url=http%3A%2F%2Fhouseofbilz.com%2FHouseOfBilz%2Farchive%2F2009%2F08%2F21%2Fadventures-in-mvvm-ndash-generalized-command-behavior-attachments.aspx)](http://dotnetshoutout.com/Adventures-in-MVVM-Generalized-Command-Behavior-Attachments) [![kick it on DotNetKicks.com](http://www.dotnetkicks.com/Services/Images/KickItImageGenerator.ashx?url=http%3a%2f%2fhouseofbilz.com%2fHouseOfBilz%2farchive%2f2009%2f08%2f21%2fadventures-in-mvvm-ndash-generalized-command-behavior-attachments.aspx)](http://www.dotnetkicks.com/kick/?url=http%3a%2f%2fhouseofbilz.com%2fHouseOfBilz%2farchive%2f2009%2f08%2f21%2fadventures-in-mvvm-ndash-generalized-command-behavior-attachments.aspx)
+[More Adventures in MVVM](/archives/2009/05/22/adventures-in-mvvm-model-view-viewmodel/)&#160; 
 
-There are several examples on the web that describe the [“Attached Behavior”](http://houseofbilz.com/archive/2009/05/29/adventures-in-mvvm-ndash-commanding-with-list-boxes.aspx) pattern in Silverlight and WPF.&#160; This pattern works really well for binding commands in the ViewModel to controls in the View.&#160; The problem with this is that for every behavior, there is a LOT of boilerplate code that goes along with it.&#160; Because the DepencencyProperties need to be static, they cannot be easily abstracted into a common class. 
+There are several examples on the web that describe the [“Attached Behavior”](/archive/2009/05/29/adventures-in-mvvm-ndash-commanding-with-list-boxes.aspx) pattern in Silverlight and WPF.&#160; This pattern works really well for binding commands in the ViewModel to controls in the View.&#160; The problem with this is that for every behavior, there is a LOT of boilerplate code that goes along with it.&#160; Because the DepencencyProperties need to be static, they cannot be easily abstracted into a common class. 
 
 If you want to attach a **MouseEnterBehavior **to a control, you need to create two or three static Dependency Properties in the MouseEnter class.&#160; They are MouseEnter.Command, MouseEnter.MouseEnterBehavior and optionally, MouseEnter.CommandParameter.
-  <div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:e9ea40db-5abc-43e8-ba7b-91d3e2b0d8e3" class="wlWriterSmartContent">   <pre style="background-color: #e4e4e4; overflow: auto"><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">class</span><span style="color: #000000"> MouseEnter 
-    {
-        </span><span style="color: #0000ff">private</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">readonly</span><span style="color: #000000"> DependencyProperty BehaviorProperty </span><span style="color: #000000">=</span><span style="color: #000000">
-            DependencyProperty.RegisterAttached(
-                </span><span style="color: #800000">&quot;</span><span style="color: #800000">MouseEnterBehavior</span><span style="color: #800000">&quot;</span><span style="color: #000000">,
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(MouseEnterBehavior),
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(Control),
-                </span><span style="color: #0000ff">null</span><span style="color: #000000">);
+  
+```csharp
+public class MouseEnter
+{
+    private static readonly DependencyProperty BehaviorProperty =
+        DependencyProperty.RegisterAttached(
+            "MouseEnterBehavior",
+            typeof(MouseEnterBehavior),
+            typeof(Control),
+            null);
 
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">readonly</span><span style="color: #000000"> DependencyProperty CommandProperty </span><span style="color: #000000">=</span><span style="color: #000000">
-            DependencyProperty.RegisterAttached(
-                </span><span style="color: #800000">&quot;</span><span style="color: #800000">Command</span><span style="color: #800000">&quot;</span><span style="color: #000000">,
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(ICommand),
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(MouseEnter),
-                </span><span style="color: #0000ff">new</span><span style="color: #000000"> PropertyMetadata(OnSetCommand));
+    public static readonly DependencyProperty CommandProperty =
+        DependencyProperty.RegisterAttached(
+            "Command",
+            typeof(ICommand),
+            typeof(MouseEnter),
+            new PropertyMetadata(OnSetCommand));
 
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">readonly</span><span style="color: #000000"> DependencyProperty CommandParameterProperty </span><span style="color: #000000">=</span><span style="color: #000000">
-            DependencyProperty.RegisterAttached(
-                </span><span style="color: #800000">&quot;</span><span style="color: #800000">CommandParameter</span><span style="color: #800000">&quot;</span><span style="color: #000000">,
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(</span><span style="color: #0000ff">object</span><span style="color: #000000">),
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(MouseEnter),
-                </span><span style="color: #0000ff">new</span><span style="color: #000000"> PropertyMetadata(OnSetParameter))</span></pre>
-
-<!-- Code inserted with Steve Dunn's Windows Live Writer Code Formatter Plugin.  http://dunnhq.com -->
-
-</div>
+    public static readonly DependencyProperty CommandParameterProperty =
+        DependencyProperty.RegisterAttached(
+            "CommandParameter",
+            typeof(object),
+            typeof(MouseEnter),
+            new PropertyMetadata(OnSetParameter));
+```
 
 And then the &quot;Change Handlers&quot;
 
-<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:816c8ecc-3aec-4f66-b672-6686ef0736e7" class="wlWriterSmartContent">
-  <pre style="background-color: #e4e4e4; overflow: auto"><span style="color: #000000">        </span><span style="color: #0000ff">private</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">void</span><span style="color: #000000"> OnSetCommand(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+```csharp
+        private static void OnSetCommand(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var target </span><span style="color: #000000">=</span><span style="color: #000000"> dependencyObject </span><span style="color: #0000ff">as</span><span style="color: #000000"> Control;
-            </span><span style="color: #0000ff">if</span><span style="color: #000000"> (target </span><span style="color: #000000">==</span><span style="color: #000000"> </span><span style="color: #0000ff">null</span><span style="color: #000000">)
-                </span><span style="color: #0000ff">return</span><span style="color: #000000">;
+            var target = dependencyObject as Control;
+            if (target == null)
+                return;
 
-            GetOrCreateBehavior(target).Command </span><span style="color: #000000">=</span><span style="color: #000000"> args.NewValue </span><span style="color: #0000ff">as</span><span style="color: #000000"> ICommand;
+            GetOrCreateBehavior(target).Command = args.NewValue as ICommand;
         }
 
-        </span><span style="color: #0000ff">private</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">void</span><span style="color: #000000"> OnSetParameter(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        private static void OnSetParameter(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var target </span><span style="color: #000000">=</span><span style="color: #000000"> dependencyObject </span><span style="color: #0000ff">as</span><span style="color: #000000"> Control;
-            </span><span style="color: #0000ff">if</span><span style="color: #000000"> (target </span><span style="color: #000000">!=</span><span style="color: #000000"> </span><span style="color: #0000ff">null</span><span style="color: #000000">)
+            var target = dependencyObject as Control;
+            if (target != null)
             {
-                GetOrCreateBehavior(target).CommandParameter </span><span style="color: #000000">=</span><span style="color: #000000"> args.NewValue;
+                GetOrCreateBehavior(target).CommandParameter = args.NewValue;
             }
         }
 
-        </span><span style="color: #0000ff">protected</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> MouseEnterBehavior GetOrCreateBehavior(Control control)
+        protected static MouseEnterBehavior GetOrCreateBehavior(Control control)
         {
-            var behavior </span><span style="color: #000000">=</span><span style="color: #000000"> control.GetValue(BehaviorProperty) </span><span style="color: #0000ff">as</span><span style="color: #000000"> MouseEnterBehavior;
-            </span><span style="color: #0000ff">if</span><span style="color: #000000"> (behavior </span><span style="color: #000000">==</span><span style="color: #000000"> </span><span style="color: #0000ff">null</span><span style="color: #000000">)
+            var behavior = control.GetValue(BehaviorProperty) as MouseEnterBehavior;
+            if (behavior == null)
             {
-                behavior </span><span style="color: #000000">=</span><span style="color: #000000"> </span><span style="color: #0000ff">new</span><span style="color: #000000"> MouseEnterBehavior(control);
+                behavior = new MouseEnterBehavior(control);
                 control.SetValue(BehaviorProperty, behavior);
             }
 
-            </span><span style="color: #0000ff">return</span><span style="color: #000000"> behavior;
-        }</span></pre>
-
-<!-- Code inserted with Steve Dunn's Windows Live Writer Code Formatter Plugin.  http://dunnhq.com -->
-
-</div>
+            return behavior;
+        }
+```
 
 Since the Dependency Properties are static, Silverlight also requires you to in include Get* and Set* static methods:
 
-<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:ea927050-1419-4a44-81c5-a493752ebde6" class="wlWriterSmartContent">
-  <pre style="background-color: #e4e4e4; overflow: auto"><span style="color: #000000">        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">void</span><span style="color: #000000"> SetCommand(Control control, ICommand command) { control.SetValue(CommandProperty, command); }
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> ICommand GetCommand(Control control) { </span><span style="color: #0000ff">return</span><span style="color: #000000"> control.GetValue(CommandProperty) </span><span style="color: #0000ff">as</span><span style="color: #000000"> ICommand; }
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">void</span><span style="color: #000000"> SetCommandParameter(Control control, </span><span style="color: #0000ff">object</span><span style="color: #000000"> parameter) { control.SetValue(CommandParameterProperty, parameter); }
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">object</span><span style="color: #000000"> GetCommandParameter(Control buttonBase) { </span><span style="color: #0000ff">return</span><span style="color: #000000"> buttonBase.GetValue(CommandParameterProperty); }</span></pre>
-
-<!-- Code inserted with Steve Dunn's Windows Live Writer Code Formatter Plugin.  http://dunnhq.com -->
-
-</div>
+```csharp
+public static void SetCommand(Control control, ICommand command) { control.SetValue(CommandProperty, command); }
+public static ICommand GetCommand(Control control) { return control.GetValue(CommandProperty) as ICommand; }
+public static void SetCommandParameter(Control control, object parameter) { control.SetValue(CommandParameterProperty, parameter); }
+public static object GetCommandParameter(Control buttonBase) { return buttonBase.GetValue(CommandParameterProperty); }
+```
 
 This is a classic case of reuse via “Copy and Paste”.&#160; The problem is that there are several places in this code where you need to change three different types and many strings.&#160; If you don’t invoke the magic incantation properly, nothing works.&#160; It will compile but it won’t work (or you will get an obscure XAML parse error).
 
 I cringe whenever I have to employ copy/paste reuse.&#160; In the cases where it is absolutely necessary (such as this), I believe the risk can be reduced proportionately to the complexity of the modification after you paste.&#160; This is why I came up with an **Attachment** base class to generalize all of this boilerplate code.&#160; The previous code can be reduced to:
 
-<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:1f59b685-9759-4cd3-be5c-ac0e664c866e" class="wlWriterSmartContent">
-  <pre style="background-color: #e4e4e4; overflow: auto"><span style="color: #000000">    </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">class</span><span style="color: #000000"> MouseEnter : Attachment</span><span style="color: #000000">&lt;</span><span style="color: #000000">Control, MouseEnterBehavior, MouseEnter</span><span style="color: #000000">&gt;</span><span style="color: #000000">
-    {
-        </span><span style="color: #0000ff">private</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">readonly</span><span style="color: #000000"> DependencyProperty BehaviorProperty </span><span style="color: #000000">=</span><span style="color: #000000"> Behavior();
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">readonly</span><span style="color: #000000"> DependencyProperty CommandProperty </span><span style="color: #000000">=</span><span style="color: #000000"> Command(BehaviorProperty);
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">readonly</span><span style="color: #000000"> DependencyProperty CommandParameterProperty </span><span style="color: #000000">=</span><span style="color: #000000"> Parameter(BehaviorProperty);
+```csharp
+public class MouseEnter : Attachment<Control, MouseEnterBehavior, MouseEnter>
+{
+    private static readonly DependencyProperty BehaviorProperty = Behavior();
+    public static readonly DependencyProperty CommandProperty = Command(BehaviorProperty);
+    public static readonly DependencyProperty CommandParameterProperty = Parameter(BehaviorProperty);
 
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">void</span><span style="color: #000000"> SetCommand(Control control, ICommand command) { control.SetValue(CommandProperty, command); }
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> ICommand GetCommand(Control control) { </span><span style="color: #0000ff">return</span><span style="color: #000000"> control.GetValue(CommandProperty) </span><span style="color: #0000ff">as</span><span style="color: #000000"> ICommand; }
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">void</span><span style="color: #000000"> SetCommandParameter(Control control, </span><span style="color: #0000ff">object</span><span style="color: #000000"> parameter) { control.SetValue(CommandParameterProperty, parameter); }
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">object</span><span style="color: #000000"> GetCommandParameter(Control buttonBase) { </span><span style="color: #0000ff">return</span><span style="color: #000000"> buttonBase.GetValue(CommandParameterProperty); }
-    }</span></pre>
-
-<!-- Code inserted with Steve Dunn's Windows Live Writer Code Formatter Plugin.  http://dunnhq.com -->
-
-</div>
+    public static void SetCommand(Control control, ICommand command) { control.SetValue(CommandProperty, command); }
+    public static ICommand GetCommand(Control control) { return control.GetValue(CommandProperty) as ICommand; }
+    public static void SetCommandParameter(Control control, object parameter) { control.SetValue(CommandParameterProperty, parameter); }
+    public static object GetCommandParameter(Control buttonBase) { return buttonBase.GetValue(CommandParameterProperty); }
+}
+```
 
 The only modifications to this copied code exist on the first line. 
 
@@ -123,94 +113,87 @@ In this code, I am using the **CommandBehaviorBase** class from the [Prism](http
 
 Here is the **Attachment** base class:
 
-<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:90bbf315-3e80-4acf-aaf4-95a5664e59d3" class="wlWriterSmartContent">
-  <pre style="background-color: #e4e4e4; overflow: auto"><span style="color: #000000">    </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">class</span><span style="color: #000000"> Attachment</span><span style="color: #000000">&lt;</span><span style="color: #000000">TargetT, BehaviorT, AttachmentT</span><span style="color: #000000">&gt;</span><span style="color: #000000">
-        </span><span style="color: #0000ff">where</span><span style="color: #000000"> TargetT : Control
-        </span><span style="color: #0000ff">where</span><span style="color: #000000"> BehaviorT : CommandBehaviorBase</span><span style="color: #000000">&lt;</span><span style="color: #000000">TargetT</span><span style="color: #000000">&gt;</span><span style="color: #000000">
+```csharp
+public class Attachment<TargetT, BehaviorT, AttachmentT>
+        where TargetT : Control
+        where BehaviorT : CommandBehaviorBase<TargetT>
     {
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> DependencyProperty Behavior()
+        public static DependencyProperty Behavior()
         {
-            </span><span style="color: #0000ff">return</span><span style="color: #000000"> DependencyProperty.RegisterAttached(
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(BehaviorT).Name,
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(BehaviorT),
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(TargetT),
-                </span><span style="color: #0000ff">null</span><span style="color: #000000">);
+            return DependencyProperty.RegisterAttached(
+                typeof(BehaviorT).Name,
+                typeof(BehaviorT),
+                typeof(TargetT),
+                null);
         }
 
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> DependencyProperty Command(DependencyProperty behaviorProperty)
+        public static DependencyProperty Command(DependencyProperty behaviorProperty)
         {
-            </span><span style="color: #0000ff">return</span><span style="color: #000000"> DependencyProperty.RegisterAttached(
-                </span><span style="color: #800000">&quot;</span><span style="color: #800000">Command</span><span style="color: #800000">&quot;</span><span style="color: #000000">,
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000"> (ICommand),
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000">(AttachmentT),
-                </span><span style="color: #0000ff">new</span><span style="color: #000000"> PropertyMetadata((target, args) </span><span style="color: #000000">=&gt;</span><span style="color: #000000"> OnSetCommandCallback(target, args, behaviorProperty)));
+            return DependencyProperty.RegisterAttached(
+                "Command",
+                typeof (ICommand),
+                typeof(AttachmentT),
+                new PropertyMetadata((target, args) => OnSetCommandCallback(target, args, behaviorProperty)));
         }
 
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> DependencyProperty Parameter(DependencyProperty behaviorProperty)
+        public static DependencyProperty Parameter(DependencyProperty behaviorProperty)
         {
-            </span><span style="color: #0000ff">return</span><span style="color: #000000"> DependencyProperty.RegisterAttached(
-                </span><span style="color: #800000">&quot;</span><span style="color: #800000">CommandParameter</span><span style="color: #800000">&quot;</span><span style="color: #000000">,
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000"> (</span><span style="color: #0000ff">object</span><span style="color: #000000">),
-                </span><span style="color: #0000ff">typeof</span><span style="color: #000000"> (AttachmentT),
-                </span><span style="color: #0000ff">new</span><span style="color: #000000"> PropertyMetadata((target, args) </span><span style="color: #000000">=&gt;</span><span style="color: #000000"> OnSetParameterCallback(target, args, behaviorProperty)));
+            return DependencyProperty.RegisterAttached(
+                "CommandParameter",
+                typeof (object),
+                typeof (AttachmentT),
+                new PropertyMetadata((target, args) => OnSetParameterCallback(target, args, behaviorProperty)));
         }
 
-        </span><span style="color: #0000ff">protected</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">void</span><span style="color: #000000"> OnSetCommandCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e, DependencyProperty behaviorProperty)
+        protected static void OnSetCommandCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e, DependencyProperty behaviorProperty)
         {
-            var target </span><span style="color: #000000">=</span><span style="color: #000000"> dependencyObject </span><span style="color: #0000ff">as</span><span style="color: #000000"> TargetT;
-            </span><span style="color: #0000ff">if</span><span style="color: #000000"> (target </span><span style="color: #000000">==</span><span style="color: #000000"> </span><span style="color: #0000ff">null</span><span style="color: #000000">)
-                </span><span style="color: #0000ff">return</span><span style="color: #000000">;
+            var target = dependencyObject as TargetT;
+            if (target == null)
+                return;
 
-            GetOrCreateBehavior(target, behaviorProperty).Command </span><span style="color: #000000">=</span><span style="color: #000000"> e.NewValue </span><span style="color: #0000ff">as</span><span style="color: #000000"> ICommand;
+            GetOrCreateBehavior(target, behaviorProperty).Command = e.NewValue as ICommand;
         }
 
-        </span><span style="color: #0000ff">protected</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> </span><span style="color: #0000ff">void</span><span style="color: #000000"> OnSetParameterCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e, DependencyProperty behaviorProperty)
+        protected static void OnSetParameterCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e, DependencyProperty behaviorProperty)
         {
-            var target </span><span style="color: #000000">=</span><span style="color: #000000"> dependencyObject </span><span style="color: #0000ff">as</span><span style="color: #000000"> TargetT;
-            </span><span style="color: #0000ff">if</span><span style="color: #000000"> (target </span><span style="color: #000000">!=</span><span style="color: #000000"> </span><span style="color: #0000ff">null</span><span style="color: #000000">)
+            var target = dependencyObject as TargetT;
+            if (target != null)
             {
-                GetOrCreateBehavior(target, behaviorProperty).CommandParameter </span><span style="color: #000000">=</span><span style="color: #000000"> e.NewValue;
+                GetOrCreateBehavior(target, behaviorProperty).CommandParameter = e.NewValue;
             }
         }
 
-        </span><span style="color: #0000ff">protected</span><span style="color: #000000"> </span><span style="color: #0000ff">static</span><span style="color: #000000"> BehaviorT GetOrCreateBehavior(Control control, DependencyProperty behaviorProperty)
+        protected static BehaviorT GetOrCreateBehavior(Control control, DependencyProperty behaviorProperty)
         {
-            var behavior </span><span style="color: #000000">=</span><span style="color: #000000"> control.GetValue(behaviorProperty) </span><span style="color: #0000ff">as</span><span style="color: #000000"> BehaviorT;
-            </span><span style="color: #0000ff">if</span><span style="color: #000000"> (behavior </span><span style="color: #000000">==</span><span style="color: #000000"> </span><span style="color: #0000ff">null</span><span style="color: #000000">)
+            var behavior = control.GetValue(behaviorProperty) as BehaviorT;
+            if (behavior == null)
             {
-                behavior </span><span style="color: #000000">=</span><span style="color: #000000"> Activator.CreateInstance(</span><span style="color: #0000ff">typeof</span><span style="color: #000000">(BehaviorT), control) </span><span style="color: #0000ff">as</span><span style="color: #000000"> BehaviorT;
+                behavior = Activator.CreateInstance(typeof(BehaviorT), control) as BehaviorT;
                 control.SetValue(behaviorProperty, behavior);
             }
 
-            </span><span style="color: #0000ff">return</span><span style="color: #000000"> behavior;
+            return behavior;
         }
-    }</span></pre>
-
-<!-- Code inserted with Steve Dunn's Windows Live Writer Code Formatter Plugin.  http://dunnhq.com -->
+    }
+```
 
 </div>
 
 And finally, just to complete the example, here is what the **MouseEnterBehavior** looks like:
 
-<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:8851b117-15d5-4c8a-972f-8100b278b52f" class="wlWriterSmartContent">
-  <pre style="background-color: #e4e4e4; overflow: auto"><span style="color: #000000">    </span><span style="color: #0000ff">public</span><span style="color: #000000"> </span><span style="color: #0000ff">class</span><span style="color: #000000"> MouseEnterBehavior : CommandBehaviorBase</span><span style="color: #000000">&lt;</span><span style="color: #000000">Control</span><span style="color: #000000">&gt;</span><span style="color: #000000">
+```csharp
+public class MouseEnterBehavior : CommandBehaviorBase<Control>
+{
+    public MouseEnterBehavior(Control selectableObject)
+        : base(selectableObject)
     {
-        </span><span style="color: #0000ff">public</span><span style="color: #000000"> MouseEnterBehavior(Control selectableObject)
-            : </span><span style="color: #0000ff">base</span><span style="color: #000000">(selectableObject)
-        {
-            selectableObject.MouseEnter </span><span style="color: #000000">+=</span><span style="color: #000000"> (sender, args) </span><span style="color: #000000">=&gt;</span><span style="color: #000000"> ExecuteCommand();
-        }
-    }</span></pre>
-
-<!-- Code inserted with Steve Dunn's Windows Live Writer Code Formatter Plugin.  http://dunnhq.com -->
-
-</div>
+        selectableObject.MouseEnter += (sender, args) => ExecuteCommand();
+    }
+}
+```
 
 And to use it in your XAML, it would look like this:
 
-<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:8f041e8a-6219-4e9f-a156-fa06965082e7" class="wlWriterSmartContent">
-  <pre style="background-color: #e4e4e4; overflow: auto"><span style="color: #0000ff">&lt;</span><span style="color: #800000">Button </span><span style="color: #ff0000">Behaviors:MouseEnter.Command</span><span style="color: #0000ff">=&quot;</span><span style="color: #808000">{Binding MouseEnter}</span><span style="color: #0000ff">&quot;</span><span style="color: #ff0000"> Behaviors:MouseEnter.CommandParameter</span><span style="color: #0000ff">=&quot;Optional Paremeter&quot;</span><span style="color: #0000ff">/&gt;</span></pre>
-
-<!-- Code inserted with Steve Dunn's Windows Live Writer Code Formatter Plugin.  http://dunnhq.com -->
-
-</div>
+```xml
+<Button Behaviors:MouseEnter.Command="{Binding MouseEnter}" Behaviors:MouseEnter.CommandParameter="Optional Paremeter"/>
+```
