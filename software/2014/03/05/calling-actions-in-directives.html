@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Calling Actions in Directives - This is Brian Genisio&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Techniques for executing actions on directives">
+<meta name="keywords" content="Angular,Directives">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Calling Actions in Directives">
+<meta property="og:url" content="http://briangenisio.com/software/2014/03/05/calling-actions-in-directives.html">
+<meta property="og:site_name" content="This is Brian Genisio&#39;s Blog">
+<meta property="og:description" content="Techniques for executing actions on directives">
+<meta property="og:updated_time" content="2017-06-12T14:03:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Calling Actions in Directives">
+<meta name="twitter:description" content="Techniques for executing actions on directives">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo logo-text" href="/">Brian Genisio&#39;s Blog</a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://briangenisio.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-software/2014/03/05/calling-actions-in-directives.html" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Calling Actions in Directives
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/software/2014/03/05/calling-actions-in-directives.html" class="article-date">
+  <time datetime="2014-03-05T05:00:00.000Z" itemprop="datePublished">2014-03-05</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Software/">Software</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>The other day, a coleague asked me what the best way is to call an action on a directive.  We know that directives can call back to the parent scope, but with isolated scopes, you have no way to call into a directive to execute an action.  This type of thing is pretty rare in Angular.  Usually, our directives respond to changes in data or state which an be based off of the built-in binding capabilities.  Sometimes, however, we need to call actions on a directive.  A video player directive, for example, can benefit from actions such as <code>video.play()</code> and <code>video.pause()</code>.  </p>
+<p>Some of the things to consider:</p>
+<ul>
+<li>When you have multiple instances, how do you tell them all to act?</li>
+<li>When you have multiple instances, how do you tell only one to act?</li>
+<li>How would multiple copies inside of an ng-repeat work?</li>
+<li>We might want to avoid tight coupling (do we always?)</li>
+</ul>
+<p>So I thought about it more, and I have three possible answers to this question (there are more, but these feel most natural).  I am open to thoughts.  Is there a better way that I am missing?  I’m basing some of this off of what other widget frameworks do.  Take WinForms/WPF/Silverlight/Flex, for instance.  In those worlds, the controls (directives) expose methods.  The caller gives it a name <code>&lt;widget name=&quot;foo&quot;&gt;</code> and the framework creates variables for you to call: <code>foo.bar()</code>.  Convenient, but Angular doesn’t give us this out of the box.  What are some approaches to come close to that?</p>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p>I am assuming a directive called “arm” which can be composed to create a “puppet”.  A “puppeteer” wants to control the arms of the puppets.  Each arm has an action called <code>function wave(){ alert(&#39;wave&#39;); }</code>  All of the code for these examples can be found <a href="http://codepen.io/BrianGenisio/pen/ituKv" target="_blank" rel="external">here</a>.</p>
+<h3 id="Events"><a href="#Events" class="headerlink" title="Events"></a>Events</h3><p>The most obvious solution mkhere is to use events.  Events are nice because they are built in.  Events are also a bit ugly, however, because they broadcast.  We can mitigate this by namespacing our events.  The caller can call <code>$broadcast(&#39;arm:wave&#39;)</code> and the directive can hook that event: <code>$scope.$on(&#39;arm:wave&#39;, wave)</code>.</p>
+<p>This works well except that in our current implementation, we can’t send a “wave” event to a specific directive.  If we borrow from other frameworks, we can just give the arm an <code>id</code> like this: <code>&lt;arm id=&quot;left&quot;&gt;&lt;/arm&gt;</code>.  Now, the puppeteer can call it: <code>$broadcast(&#39;arm: wave&#39;, &#39;left&#39;)</code>.  The directive’s code gets a bit more complex but not too bad.  It starts by binding id <code>scope: { id: &#39;@&#39; }</code> and then the event handler does this</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$scope.$on(<span class="string">'arm:wave'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e, id</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(id === <span class="literal">undefined</span> || $scope.id === id) &#123;</div><div class="line">        wave();</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>This works well.  You can broadcast to all of them by ommiting the id, or you can call one of them by using the id.  How might you do this in an <code>ng-repeat</code>?</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">arm</span> <span class="attr">ng-repeat</span>=<span class="string">"arm in arms"</span> <span class="attr">id</span>=<span class="string">"arm-&#123;&#123; '&#123;&#123;arm.id' &#125;&#125;&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">arm</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Individual calls would become <code>$broadcast(&#39;arm:wave&#39;, &#39;arm-&#39; + arm.id)</code></p>
+<h3 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h3><p>Borrowing from other frameworks, this example invokes the “command” pattern.  It lets the directive define some commands that the puppeteer can call.  The directive would define a binding: <code>scope: { commands: &#39;=?&#39; }</code>.  The directive would then set the commands object: <code>$scope.commands = { wave: wave }</code>.  </p>
+<p>The puppeteer can now hook up the command: <code>&lt;arm commands=&quot;left&quot;&gt;&lt;/arm&gt;</code> and use it: <code>left.wave();</code></p>
+<p>This approach is arguably cleaner, but it introduces a new concept that isn’t native to Angular.  How does it scale to <code>ng-repeat</code>?</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">arm</span> <span class="attr">ng-repeat</span>=<span class="string">"arm in arms"</span> <span class="attr">commands</span>=<span class="string">"armControls[arm.i]"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Broadcast would become: </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">armControls.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">arm</span>) </span>&#123; arm.wave(); &#125;);</div></pre></td></tr></table></figure>
+<p>Individual calls would become: <code>armControls[arm.id].wave()</code></p>
+<h3 id="Controller-Expose"><a href="#Controller-Expose" class="headerlink" title="Controller Expose"></a>Controller Expose</h3><p>Ok, so <strong>events</strong> are a bit chatty and more code than we want to copy everytime.  <strong>Commands</strong> are less code and less chatty, but they aren’t native.  It turns out that Angular already has a way to communicate via directives (directive-to-directive) by assigning functions to the controller itself.  Like this: <code>this.wave = wave;</code>.  But the puppeteer doesn’t have access to the directive’s controller.  </p>
+<p>We can expose it!  Create a binding in the scope: <code>scope: { controller: &#39;=?&#39; }</code>.  Then, in the controller, you can just assign it: <code>$scope.controller = this;</code>.</p>
+<p>Calling it is very similar to <strong>commands</strong>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">arm</span> <span class="attr">controller</span>=<span class="string">"left"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Access to the actions and <code>ng-repeat</code> is exactly the same as the <strong>commands</strong> option, but the way you wire it up is more Angular-like.  With <strong>commands</strong>, you expose only what you want, but you need to explicitly expose everything.  With <strong>controller</strong>, you only do it once, and you don’t have to explicitly wire up the action, but you now get access to everything.</p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>In the end, I prefer the <strong>events</strong> mechanism if I am looking for a decoupled approach but a <strong>controller</strong> approach if I am looking for something a bit more coupled. I am soliciting feedback from the community since I know they are likely to have opinions.  Again, you can play with all three approaches <a href="http://codepen.io/BrianGenisio/pen/ituKv" target="_blank" rel="external">here</a>.  Thoughts?</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Directives/">Directives</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/software/2014/08/23/rise-of-the-nodebots.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Rise of the NodeBots
+        
+      </div>
+    </a>
+  
+  
+    <a href="/software/2014/01/16/angular-directives-demystified.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Angular Directives Demystified&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Brian Genisio&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'briangenisio';
+  
+  var disqus_url = 'http://briangenisio.com/software/2014/03/05/calling-actions-in-directives.html';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>

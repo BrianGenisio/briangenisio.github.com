@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Piece of Mind Temperature Monitor - This is Brian Genisio&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="How I eased my mind in the bitter cold">
+<meta name="keywords" content="Spark Core,Hacking,IOT,Internet of Things">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Piece of Mind Temperature Monitor">
+<meta property="og:url" content="http://briangenisio.com/software/2015/02/20/piece-of-mind-temperature-monitor.html">
+<meta property="og:site_name" content="This is Brian Genisio&#39;s Blog">
+<meta property="og:description" content="How I eased my mind in the bitter cold">
+<meta property="og:image" content="http://briangenisio.com/images/siesta_key.jpg">
+<meta property="og:image" content="http://briangenisio.com/images/spark_temperature.jpg">
+<meta property="og:image" content="http://briangenisio.com/images/spark_temperature_fritz.png">
+<meta property="og:image" content="http://i.imgur.com/wrm0jHJ.png">
+<meta property="og:image" content="http://briangenisio.com/images/ifttt_alert.png">
+<meta property="og:updated_time" content="2017-06-12T14:03:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Piece of Mind Temperature Monitor">
+<meta name="twitter:description" content="How I eased my mind in the bitter cold">
+<meta name="twitter:image" content="http://briangenisio.com/images/siesta_key.jpg">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo logo-text" href="/">Brian Genisio&#39;s Blog</a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://briangenisio.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-software/2015/02/20/piece-of-mind-temperature-monitor.html" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Piece of Mind Temperature Monitor
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/software/2015/02/20/piece-of-mind-temperature-monitor.html" class="article-date">
+  <time datetime="2015-02-20T05:00:00.000Z" itemprop="datePublished">2015-02-20</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Software/">Software</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/images/siesta_key.jpg" alt="Siesta Key"></p>
+<p>I just got home from 5-day vacation in <a href="http://www.drbeach.org/top10beaches.htm" target="_blank" rel="external">Siesta Key</a> where my family and I frolicked in the the slightly warmer climate than what we are used to in Ann Arbor Michigan.  The entire eastern half of the nation was under a <a href="http://en.wikipedia.org/wiki/Polar_vortex" target="_blank" rel="external">polar vortex</a> so our balmy Floridian host was much cooler than expected.  Back home, however, the temperature dropped as low as -28 degrees Fahrenheit (-33 degrees Celsius).</p>
+<p>This wouldn’t normally cause me any anxiety if it were not for my 22 year old furnace.  I couldn’t help but worry that it would fail, causing my pipes to freeze followed by all sorts of damage.  I knew I wouldn’t be comfortable leaving my home without feeling confident that my furnace was keeping up.</p>
+<h2 id="Spark-Core-Thermistor"><a href="#Spark-Core-Thermistor" class="headerlink" title="Spark Core + Thermistor"></a>Spark Core + Thermistor</h2><p>I dove into my basement to scrounge for parts and I built myself an “Internet of Things” thing to monitor the temperature inside my home.  It was really easy and it only took me 30 minutes.  I had an unused <a href="https://www.spark.io/" target="_blank" rel="external">Spark Core</a> and a <a href="http://www.amazon.com/Arduino-TinkerKit-Thermistor-Module/dp/B00EIB48W8" target="_blank" rel="external">Tinkerkit Thermistor</a> lying around, so I used them.  Any thermistor would have worked, but that is the one I found in my lab.</p>
+<p><img src="/images/spark_temperature.jpg" alt="Spark + Thermistor"></p>
+<p>I hooked up ground, power, and signal (to Analog 7) and got coding.  I found some conversion code for this Tinkerkit module on the <a href="https://github.com/rwaldron/johnny-five" target="_blank" rel="external">Johnny-Five</a> project, and I ported it over to C.  The Spark.io builder made it easy for me to send the following code to my Spark Core:</p>
+<p><img src="/images/spark_temperature_fritz.png" alt="Spark + Thermistor Diagram"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"math.h"</span></span></div><div class="line"></div><div class="line"><span class="keyword">double</span> temperature = <span class="number">0.0</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> RESISTOR = <span class="number">10000</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> ADCRES = <span class="number">4095</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> BETA = <span class="number">3950</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> GINF = <span class="number">120.6685</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> KELVIN = <span class="number">273.15</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line">    Spark.variable(<span class="string">"temperature"</span>, &amp;temperature, DOUBLE);</div><div class="line">    pinMode(A7, INPUT);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> raw = analogRead(A7);</div><div class="line">  <span class="keyword">double</span> rthermistor = RESISTOR * (ADCRES / raw - <span class="number">1.0</span>);</div><div class="line">  <span class="keyword">double</span> tempC = BETA / (<span class="built_in">log</span>(rthermistor * GINF));</div><div class="line"></div><div class="line">  temperature = tempC - KELVIN;</div><div class="line">  temperature = (temperature * <span class="number">9.0</span>) / <span class="number">5.0</span> + <span class="number">32.0</span>; <span class="comment">// to F</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>That was it.  From there, the “temperature” variable was exposed to the web.  The value was available from a simple URL: <code>https://api.spark.io/v1/devices/MY_DEVICE_ID/temperature?access_token=MY_ACCESS_TOKEN</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  cmd: &quot;VarReturn&quot;,</div><div class="line">  name: &quot;temperature&quot;,</div><div class="line">  result: 67.39388212240802,</div><div class="line">  coreInfo: &#123;</div><div class="line">    last_app: &quot;&quot;,</div><div class="line">    last_heard: &quot;2015-02-21T01:59:44.665Z&quot;,</div><div class="line">    connected: true,</div><div class="line">    deviceID: &quot;MY_DEVICE_ID&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Cool (or warm?)!  But I don’t really feel like reading JSON on my vacation.</p>
+<h2 id="CodePen-to-Host-a-Simple-UI"><a href="#CodePen-to-Host-a-Simple-UI" class="headerlink" title="CodePen to Host a Simple UI"></a>CodePen to Host a Simple UI</h2><p>I didn’t want to go through the hassle of creating a tiny site and publishing it just to read this value.  This is why I like <a href="http://codepen.io" target="_blank" rel="external">CodePen</a> and their ilk.  I can write up a quick little code snippet (note that I’m using ES6), and I’m good to go.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>The temperature at home is <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"temperature"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"reload"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary"</span>&gt;</span>Reload<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTemperature</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> device = <span class="string">"MY_DEVICE_ID"</span>;</div><div class="line">  <span class="keyword">var</span> key = <span class="string">"MY_ACCESS_TOKEN"</span>;</div><div class="line">  <span class="keyword">var</span> url = <span class="string">`https://api.spark.io/v1/devices/<span class="subst">$&#123;device&#125;</span>/temperature?access_token=<span class="subst">$&#123;key&#125;</span>`</span>;</div><div class="line">  $.getJSON(url, json =&gt; $(<span class="string">'#temperature'</span>).text(json.result.toFixed(<span class="number">1</span>) + <span class="string">" degrees"</span>));</div><div class="line">&#125;</div><div class="line"></div><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  getTemperature();</div><div class="line"></div><div class="line">  $(<span class="string">'#reload'</span>).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $(<span class="string">'#temperature'</span>).text(<span class="string">'...'</span>);</div><div class="line">    getTemperature();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Now I can go to the “full-page” view of the site from my phone.  The UI was only hacked together so it is crude (remember, this entire project only took 30 minutes to hack together), but it works!</p>
+<p><img src="http://i.imgur.com/wrm0jHJ.png" alt="See the temperature"></p>
+<p>But I really don’t want to be checking my phone every 5 minutes.</p>
+<h2 id="Setting-Up-Phone-Alerts"><a href="#Setting-Up-Phone-Alerts" class="headerlink" title="Setting Up Phone Alerts"></a>Setting Up Phone Alerts</h2><p>I really like <a href="http://ifttt.com" target="_blank" rel="external">IFTTT</a>.  It stands for “If This Then That”.  I published a <a href="https://ifttt.com/recipes/261514-cold-house" target="_blank" rel="external">recipe</a> that says: “If [the temperature goes below 55 degrees] then [send an alert to my phone]”.</p>
+<p>I had to put the device in my freezer, but I received an alert on my phone that the temperature dropped below 55 degrees!</p>
+<p><img src="/images/ifttt_alert.png" alt="A phone alert"></p>
+<h2 id="Did-My-Furnace-Fail"><a href="#Did-My-Furnace-Fail" class="headerlink" title="Did My Furnace Fail?"></a>Did My Furnace Fail?</h2><p>No, it did not.  BUT, I was never worried about it on vacation because I always knew that it was holding up.  In fact, on the last day of our vacation, the temperature jumped from 65 degrees to 70 degrees.  At first I was confused, but then I learned that our house cleaners had come that morning and they bumped the temperature up in anticipation of our arrival home!  </p>
+<p>This is why I love living in the future.  We have some amazing abstractions here.  I can focus on the details that matter to me and I let the infrastructure do the rest for me.  This is the kind of thing we’ll be seeing more and more of going forward as the “Internet of Things” becomes more ubiquitous.</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hacking/">Hacking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOT/">IOT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Internet-of-Things/">Internet of Things</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark-Core/">Spark Core</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/software/2016/01/11/get-your-motor-running.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Get Your Motor Running
+        
+      </div>
+    </a>
+  
+  
+    <a href="/software/2015/01/12/codemash-nodebots-recap.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CodeMash NodeBots&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Brian Genisio&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'briangenisio';
+  
+  var disqus_url = 'http://briangenisio.com/software/2015/02/20/piece-of-mind-temperature-monitor.html';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>
